@@ -10,6 +10,14 @@ export default function AllergyForm() {
   const [patient, setPatient] = useState({});
   const [allergies, setAllergies] = useState([]);
 
+  const initialState = {
+    name: '',
+    severity: '',
+    reaction: '',
+    patientId: patient.id,
+  };
+  const [formData, setFormData] = useState();
+
   useEffect(() => {
     if (!user.admin && !user.provider) {
       setPatient(user);

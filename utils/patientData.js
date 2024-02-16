@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { clientCredentials } from './client';
 
-const databaseURL = clientCredentials.databaseURL;
+const { databaseURL } = clientCredentials;
 
 const getSinglePatient = async (patientId) => {
   try {
@@ -18,13 +18,22 @@ const getPatientAllergies = async (patientId) => {
     const { data } = await axios.get(`${databaseURL}/allergies/patient_allergies`, { patientId });
     if (data.length > 0) {
       return data;
-    } else {
-      return [];
     }
+    return [];
   } catch (e) {
     console.warn(e);
     return e;
   }
 };
 
-export { getSinglePatient, getPatientAllergies };
+const deletePatientAllergy = async (id) => {
+  try {
+    await axios.delete(`${databaseURL}/allergies/${id}`);
+    return true;
+  } catch (e) {
+    console.warn(e);
+    return e;
+  }
+};
+
+export { getSinglePatient, getPatientAllergies, deletePatientAllergy };

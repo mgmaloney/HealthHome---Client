@@ -1,7 +1,7 @@
 import { Button } from 'react-bootstrap';
+import Link from 'next/link';
 import { signOut } from '../utils/auth';
 import { useAuth } from '../utils/context/authContext';
-import Link from 'next/link';
 
 function Home() {
   const { user } = useAuth();

@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { firstLoginAccountCheck } from '../utils/auth';
 
 function RegisterForm({ user, updateUser }) {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     uid: user.uid,
     firstName: '',
@@ -15,7 +17,9 @@ function RegisterForm({ user, updateUser }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    firstLoginAccountCheck(formData).then(() => updateUser(user.uid));
+    firstLoginAccountCheck(formData)
+      .then(() => updateUser(user.uid))
+      .then(router.push(`/`));
   };
 
   return (
