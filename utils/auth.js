@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { clientCredentials } from './client';
+import axios from 'axios';
 
 const checkUser = (uid) => new Promise((resolve, reject) => {
   fetch(`${clientCredentials.databaseURL}/checkuser`, {
@@ -17,18 +18,10 @@ const checkUser = (uid) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const registerUser = (userInfo) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/register`, {
-    method: 'POST',
-    body: JSON.stringify(userInfo),
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-  })
-    .then((resp) => resolve(resp.json()))
-    .catch(reject);
-});
+const firstLoginAccountCheck = async (payload) => {
+    const {data} = await axios.post(`${clientCredentials.databaseURL}/first_login_check`, payload)
+    return data
+}
 
 const signIn = () => {
   const provider = new firebase.auth.GoogleAuthProvider();
@@ -43,5 +36,5 @@ export {
   signIn, //
   signOut,
   checkUser,
-  registerUser,
+  firstLoginAccountCheck,
 };

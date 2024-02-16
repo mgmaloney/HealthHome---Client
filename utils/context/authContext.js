@@ -24,22 +24,23 @@ const AuthProvider = (props) => {
   // an object/value = user is logged in
 
   const updateUser = useMemo(
-    () => (uid) => checkUser(uid).then((gamerInfo) => {
-      setUser({ fbUser: oAuthUser, ...gamerInfo });
-    }),
-    [oAuthUser],
+    () => (uid) =>
+      checkUser(uid).then((userInfo) => {
+        setUser({ fbUser: oAuthUser, ...userInfo });
+      }),
+    [oAuthUser]
   );
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((fbUser) => {
       if (fbUser) {
         setOAuthUser(fbUser);
-        checkUser(fbUser.uid).then((gamerInfo) => {
+        checkUser(fbUser.uid).then((userInfo) => {
           let userObj = {};
-          if ('null' in gamerInfo) {
-            userObj = gamerInfo;
+          if ('null' in userInfo) {
+            userObj = userInfo;
           } else {
-            userObj = { fbUser, uid: fbUser.uid, ...gamerInfo };
+            userObj = { fbUser, uid: fbUser.uid, ...userInfo };
           }
           setUser(userObj);
         });
@@ -59,7 +60,7 @@ const AuthProvider = (props) => {
       // as long as user === null, will be true
       // As soon as the user value !== null, value will be false
     }),
-    [user, oAuthUser, updateUser],
+    [user, oAuthUser, updateUser]
   );
 
   return <AuthContext.Provider value={value} {...props} />;

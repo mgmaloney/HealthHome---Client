@@ -20,3 +20,14 @@ a {
 body {
   background-color: #88effd;
 }
+
+.dob {
+  display: flex;
+  flex-direction: column;
+  width: min-content;
+}
+
+.dob-container {
+  display: flex;
+  flex-direction: column;
+}
