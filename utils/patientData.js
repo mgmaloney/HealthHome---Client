@@ -15,7 +15,7 @@ const getSinglePatient = async (patientId) => {
 
 const getPatientAllergies = async (patientId) => {
   try {
-    const { data } = await axios.get(`${databaseURL}/allergies/patient_allergies`, { patientId });
+    const { data } = await axios.put(`${databaseURL}/allergies/patient_allergies`, { patientId });
     if (data.length > 0) {
       return data;
     }
@@ -38,7 +38,7 @@ const deletePatientAllergy = async (id) => {
 
 const createPatientAllergy = async (payload) => {
   try {
-    const { data } = await axios.create(`${databaseURL}/allergies`, payload);
+    const { data } = await axios.post(`${databaseURL}/allergies`, payload);
     return data;
   } catch (e) {
     console.warn(e);

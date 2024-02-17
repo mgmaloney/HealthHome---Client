@@ -3,15 +3,18 @@ import { Button } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import { deletePatientAllergy, getPatientAllergies } from '../../utils/patientData';
 
-export default function AllergyCard({ allergy, setAllergies, setFormData }) {
-  const handleRemove = async () => {
+export default function AllergyCard({ patientId, allergy, setAllergies, setFormData }) {
+  const handleRemove = () => {
     if (window.confirm(`Are you sure you want to delete ${allergy.name} allergy?`)) {
-      await deletePatientAllergy(allergy.id).then(getPatientAllergies(allergy.patient)).then(setAllergies);
+      deletePatientAllergy(allergy.id).then(async () => {
+        const response = await getPatientAllergies(patientId);
+        setAllergies(response);
+      });
     }
   };
 
   const handleEdit = () => {
-    setFormData({ id: allergy.id, name: allergy.name, severity: allergy.severity, patientId: allergy.patient });
+    setFormData({ id: allergy.id, name: allergy.name, severity: allergy.severity, reaction: allergy.reaction, patientId: allergy.patient });
   };
 
   return (

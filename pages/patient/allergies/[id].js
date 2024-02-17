@@ -17,7 +17,7 @@ export default function AllergyForm() {
     name: '',
     severity: '',
     reaction: '',
-    patientId: id,
+    patientId: Number(id),
   };
   const [formData, setFormData] = useState(initialState);
 
@@ -36,17 +36,25 @@ export default function AllergyForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (formData.id) {
-      updatePatientAllergy(formData).then(getPatientAllergies(id)).then(setAllergies);
+      updatePatientAllergy(formData)
+        .then(() => getPatientAllergies(id))
+        .then(setAllergies)
+        .then(() => setFormData(initialState));
+    } else {
+      createPatientAllergy({ ...formData })
+        .then(() => getPatientAllergies(id))
+        .then(setAllergies)
+        .then(() => setFormData(initialState));
     }
-    createPatientAllergy({ ...formData })
-      .then(getPatientAllergies)
-      .then(setAllergies);
   };
 
   return (
     <>
-      {user.id === id || user.admin || user.provider ? (
+      {user.id === Number(id) || user.admin || user.provider ? (
         <>
+          <div className="header-div">
+            <h1>Add Allergy</h1>
+          </div>
           <Form onSubmit={handleSubmit}>
             <FloatingLabel controlId="floatingInput1" label="Allergen" className="mb-3">
               <Form.Control type="text" placeholder="Name" name="name" value={formData.name} onChange={handleChange} required />
@@ -73,9 +81,9 @@ export default function AllergyForm() {
             <FloatingLabel controlId="floatingInput1" label="Describe reaction" className="mb-3">
               <Form.Control type="text" placeholder="Hives on chest..." name="reaction" value={formData.reaction} onChange={handleChange} required />
             </FloatingLabel>
-            <Button type="submit">Add Allergy</Button>
+            <Button type="submit">{formData.id ? 'Save Allergy' : 'Add Allergy'}</Button>
           </Form>
-          <div className="allergy-form-allergies">{allergies && allergies.map((allergy) => <AllergyCard allergy={allergy} setAllergies={setAllergies} setFormData={setFormData} />)}</div>
+          <div className="allergy-form-allergies">{allergies && allergies.map && allergies?.map((allergy) => <AllergyCard patientId={id} allergy={allergy} setAllergies={setAllergies} setFormData={setFormData} />)}</div>
           <Button variant="primary" onClick={() => router.push('/')}>
             Finish
           </Button>

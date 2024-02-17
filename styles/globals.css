@@ -20,6 +20,17 @@ body {
   background-color: #88effd;
 }
 
+.main-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.main-container {
+  margin: 2rem 4rem;
+  width: 90%;
+}
+
 .navbar {
   background-color: #1100f5af;
   display: flex;
@@ -28,7 +39,7 @@ body {
 }
 
 .nav-header {
-  margin-left: 2rem;
+  margin-left: 4.7rem;
   font-size: x-large;
 }
 
@@ -70,6 +81,12 @@ body {
 
 .sidebar-main > a:hover {
   color: grey;
+}
+
+.header-div {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2vh;
 }
 
 .dob {
