@@ -4,30 +4,22 @@ import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../../utils/context/authContext';
-import { createPatientAllergy, getPatientAllergies, getSinglePatient, updatePatientAllergy } from '../../../utils/patientData';
+import { createPatientAllergy, getPatientAllergies, updatePatientAllergy } from '../../../utils/patientData';
 import AllergyCard from '../../../components/cards/allergyCard';
 
 export default function AllergyForm() {
   const router = useRouter();
   const { id } = router.query;
   const { user } = useAuth();
-  const [patient, setPatient] = useState({});
   const [allergies, setAllergies] = useState([]);
 
   const initialState = {
     name: '',
     severity: '',
     reaction: '',
-    patientId: patient.id,
+    patientId: id,
   };
   const [formData, setFormData] = useState(initialState);
-
-  useEffect(() => {
-    if (!user.admin && !user.provider) {
-      setPatient(user);
-    }
-    getSinglePatient.then(setPatient);
-  }, [user.admin, user.provider]);
 
   useEffect(() => {
     getPatientAllergies(id).then(setAllergies);
@@ -53,7 +45,7 @@ export default function AllergyForm() {
 
   return (
     <>
-      {user.id === patient.id || user.admin || user.provider ? (
+      {user.id === id || user.admin || user.provider ? (
         <>
           <Form onSubmit={handleSubmit}>
             <FloatingLabel controlId="floatingInput1" label="Allergen" className="mb-3">
