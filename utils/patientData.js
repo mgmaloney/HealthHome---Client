@@ -36,4 +36,24 @@ const deletePatientAllergy = async (id) => {
   }
 };
 
-export { getSinglePatient, getPatientAllergies, deletePatientAllergy };
+const createPatientAllergy = async (payload) => {
+  try {
+    const { data } = await axios.create(`${databaseURL}/allergies`, payload);
+    return data;
+  } catch (e) {
+    console.warn(e);
+    return e;
+  }
+};
+
+const updatePatientAllergy = async (payload) => {
+  try {
+    const { data } = await axios.put(`${databaseURL}/allergies/${payload.id}`, payload);
+    return data;
+  } catch (e) {
+    console.warn(e);
+    return e;
+  }
+};
+
+export { getSinglePatient, getPatientAllergies, deletePatientAllergy, createPatientAllergy, updatePatientAllergy };
