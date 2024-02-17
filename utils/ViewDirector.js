@@ -4,6 +4,7 @@ import Loading from '../components/Loading';
 import Signin from '../components/Signin';
 import NavBar from '../components/NavBar';
 import RegisterForm from '../components/RegisterForm';
+import SideBar from '../components/sideBar';
 
 const ViewDirectorBasedOnUserAuthStatus = ({ component: Component, pageProps }) => {
   const { user, userLoading, updateUser } = useAuth();
@@ -18,7 +19,18 @@ const ViewDirectorBasedOnUserAuthStatus = ({ component: Component, pageProps }) 
     return (
       <>
         <NavBar /> {/* NavBar only visible if user is logged in and is in every view */}
-        <div className="container">{'valid' in user ? <RegisterForm user={user} updateUser={updateUser} /> : <Component {...pageProps} />}</div>
+        {'valid' in user ? (
+          <div className="container">
+            <RegisterForm user={user} updateUser={updateUser} />
+          </div>
+        ) : (
+          <div className="main-wrapper">
+            <SideBar />
+            <div className="main-container">
+              <Component {...pageProps} />
+            </div>
+          </div>
+        )}
       </>
     );
   }
