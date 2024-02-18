@@ -2,8 +2,14 @@
 import React from 'react';
 import Link from 'next/link';
 import { signOut } from '../utils/auth';
+import { useRouter } from 'next/router';
 
 export default function NavBar() {
+  const router = useRouter();
+  const resetRouteAndSignOut = () => {
+    signOut();
+    router.push('/');
+  };
   return (
     <nav className="navbar">
       {/* <div className="nav-container"> */}
@@ -12,7 +18,7 @@ export default function NavBar() {
       </Link>
       {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav"> */}
-      <button type="button" className="signout-btn" onClick={signOut}>
+      <button type="button" className="signout-btn" onClick={resetRouteAndSignOut}>
         Sign Out
       </button>
       {/* </div> */}

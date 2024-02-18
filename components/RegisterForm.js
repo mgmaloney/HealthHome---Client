@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { firstLoginAccountCheck } from '../utils/auth';
+import { useAuth } from '../utils/context/authContext';
 
-function RegisterForm({ user, updateUser }) {
+function RegisterForm({ updateUser }) {
   const router = useRouter();
+  const { user, userLoading } = useAuth();
+  const [errorMessage, setErrorMessage] = useState('');
   const [formData, setFormData] = useState({
     uid: user.uid,
     firstName: '',
@@ -15,16 +18,30 @@ function RegisterForm({ user, updateUser }) {
     ssn: '',
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    firstLoginAccountCheck(formData)
-      .then(() => updateUser(user.uid))
-      .then(router.push(`/`));
+    const response = await firstLoginAccountCheck(formData);
+    if ('valid' in response) {
+      setErrorMessage('Account not found. Please try again or contact the clinic');
+    }
+    await updateUser(user.uid);
   };
+
+  useEffect(() => {
+    if (user.uid) {
+      if (user.provider || user.admin) {
+        console.warn('wrong routing');
+        router.push('/');
+      } else if (!user.provder && !user.provider && user.id) {
+        router.push(`/patient/allergies/${user.id}`);
+      }
+    }
+  }, [user.uid, user.id]);
 
   return (
     <>
       <h1 className="page-header">Please Enter Some Information to Confirm Your Account</h1>
+      <h2 className="error-message">{errorMessage}</h2>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>First Name:</Form.Label>
@@ -40,7 +57,7 @@ function RegisterForm({ user, updateUser }) {
             <Form.Label>Last 4 Digits of SSN:</Form.Label>
           </div>
           <Form.Control as="textarea" name="ssn" required placeholder="Last 4 Digits of SSN" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
-          <Form.Text className="text-muted"></Form.Text>
+          <Form.Text className="text-muted" />
         </Form.Group>
         <Button variant="primary" type="submit">
           Submit
@@ -51,9 +68,6 @@ function RegisterForm({ user, updateUser }) {
 }
 
 RegisterForm.propTypes = {
-  user: PropTypes.shape({
-    uid: PropTypes.string.isRequired,
-  }).isRequired,
   updateUser: PropTypes.func.isRequired,
 };
 

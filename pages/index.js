@@ -1,6 +1,5 @@
 import { Button } from 'react-bootstrap';
 import Link from 'next/link';
-import { signOut } from '../utils/auth';
 import { useAuth } from '../utils/context/authContext';
 
 function Home() {
@@ -21,9 +20,6 @@ function Home() {
       <Link passHref href={'/'}>
         <p>You have X Unread Messages</p>
       </Link>
-      <Button variant="danger" type="button" size="lg" className="copy-btn" onClick={signOut}>
-        Sign Out
-      </Button>
     </div>
   );
 }
