@@ -2,6 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import axios from 'axios';
 import { clientCredentials } from './client';
+import { useRouter } from 'next/router';
 
 const checkUser = (uid) =>
   new Promise((resolve, reject) => {
@@ -19,10 +20,19 @@ const checkUser = (uid) =>
       .catch(reject);
   });
 
-const firstLoginAccountCheck = async (payload) => {
-  const { data } = await axios.post(`${clientCredentials.databaseURL}/first_login_check`, payload);
-  return data;
-};
+const firstLoginAccountCheck = (payload) =>
+  new Promise((resolve, reject) => {
+    fetch(`${clientCredentials.databaseURL}/first_login_check`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    })
+      .then((resp) => resolve(resp.json()))
+      .catch(reject);
+  });
 
 const signIn = () => {
   const provider = new firebase.auth.GoogleAuthProvider();
