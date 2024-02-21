@@ -5,7 +5,20 @@ const databaseUrl = clientCredentials.databaseURL;
 
 const getUserMessages = async (payload) => {
   try {
-    const { data } = await axios.get(`${databaseUrl}/messages`, payload);
+    const { data } = await axios.put(`${databaseUrl}/messages/user_messages`, payload);
+    if (data.length > 0) {
+      return data;
+    }
+    return [];
+  } catch (e) {
+    console.warn(e);
+    return e;
+  }
+};
+
+const getConversation = async (payload) => {
+  try {
+    const { data } = await axios.get(`${databaseUrl}/messages/get_conversation`, payload);
     if (data.length > 0) {
       return data;
     }
@@ -26,4 +39,4 @@ const createMessage = async (payload) => {
   }
 };
 
-export { getUserMessages, createMessage };
+export { getUserMessages, createMessage, getConversation };
