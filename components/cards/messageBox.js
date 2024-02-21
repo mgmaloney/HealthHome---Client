@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { createMessage, getConversation, getUserMessages } from '../../utils/messageData';
 
 export default function MessageBox({ recipientId, setMessages, setActiveConversation }) {

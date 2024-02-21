@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { getConversation } from '../utils/messageData';
+import React from 'react';
 import MessageCard from './cards/messageCard';
 
-export default function Conversation({ recipientId, activeConversation }) {
+export default function Conversation({ activeConversation }) {
   return <div className="conversation">{activeConversation && activeConversation.map((message) => <MessageCard message={message} key={message.id} />)}</div>;
 }
