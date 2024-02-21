@@ -39,4 +39,17 @@ const createMessage = async (payload) => {
   }
 };
 
-export { getUserMessages, createMessage, getConversation };
+const getProvidersAndAdmins = async () => {
+  try {
+    const { data } = await axios.put(`${databaseUrl}/users/get_providers_and_admins`);
+    if (data.length > 0) {
+      return data;
+    }
+    return [];
+  } catch (e) {
+    console.warn(e);
+    return e;
+  }
+};
+
+export { getUserMessages, createMessage, getConversation, getProvidersAndAdmins };
