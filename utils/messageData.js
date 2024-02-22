@@ -40,6 +40,16 @@ const createMessage = async (payload) => {
   }
 };
 
+const readMessage = async (payload) => {
+  try {
+    const { data } = await axios.put(`${databaseUrl}/messages/read_message`, payload);
+    return data;
+  } catch (e) {
+    console.warn(e);
+    return e;
+  }
+};
+
 const getProvidersAndAdmins = async () => {
   try {
     const { data } = await axios.put(`${databaseUrl}/users/get_providers_and_admins`);
@@ -66,4 +76,4 @@ const getPatients = async () => {
   }
 };
 
-export { getUserMessages, createMessage, getConversation, getProvidersAndAdmins, getPatients };
+export { getUserMessages, createMessage, readMessage, getConversation, getProvidersAndAdmins, getPatients };
