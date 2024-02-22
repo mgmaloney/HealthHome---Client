@@ -13,13 +13,24 @@ export default function MessageInfo({ message, setActiveConversation }) {
     }
   }, [message.content]);
 
-  const handleConversationSelect = () => {
-    getConversation({ userId: user.id, recipientId: message.recipient }).then(setActiveConversation);
+  const handleConversationSelect = async () => {
+    const conversation = await getConversation({ userId: user.id, recipientId: message.recipient.id });
+
+    setActiveConversation(conversation);
+  };
+
+  const handleCredentialDisplay = () => {
+    if (message.recipient.credential) {
+      return `, ${message.recipient.credential}`;
+    }
+    if (message.sender.credential) {
+      return `, ${message.sender.credential}`;
+    }
   };
 
   return (
     <div className="message-info" onClick={handleConversationSelect}>
-      <p className="message-info-sender">{message.sender}</p>
+      <p className="message-info-contact">{user.id === message.sender.id ? `${message.recipient.first_name} ${message.recipient.last_name}${handleCredentialDisplay()}` : `${message.sender.first_name}${message.sender.last_name} ${handleCredentialDisplay()}`}</p>
       <p className="message-info-preview">{preview}</p>
     </div>
   );

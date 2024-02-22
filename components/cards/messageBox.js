@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
 import { createMessage, getConversation, getUserMessages } from '../../utils/messageData';
+import { useAuth } from '../../utils/context/authContext';
 
 export default function MessageBox({ recipientId, setMessages, setActiveConversation }) {
   const { user } = useAuth();
   const [message, setMessage] = useState('');
 
   const handleTextChange = (e) => {
-    setMessage(e);
+    setMessage(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await createMessage({ content: message, senderId: user.id, recipientId });
-    const updatedMessages = await getUserMessages({ userId: user.id });
-    setMessages(updatedMessages);
-    const updatedConversation = await getConversation({ userId: user.id, recipientId });
-    setActiveConversation(updatedConversation);
-    setMessage('');
+    if (recipientId !== 0) {
+      await createMessage({ content: message, senderId: user.id, recipientId });
+      const updatedMessages = await getUserMessages({ userId: user.id });
+      setMessages(updatedMessages);
+      const updatedConversation = await getConversation({ userId: user.id, recipientId });
+      setActiveConversation(updatedConversation);
+      setMessage('');
+    }
   };
 
   return (

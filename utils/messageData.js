@@ -6,6 +6,7 @@ const databaseUrl = clientCredentials.databaseURL;
 const getUserMessages = async (payload) => {
   try {
     const { data } = await axios.put(`${databaseUrl}/messages/user_messages`, payload);
+    console.log('🚀 ~ getUserMessages ~ data:', data);
     if (data.length > 0) {
       return data;
     }
@@ -18,7 +19,7 @@ const getUserMessages = async (payload) => {
 
 const getConversation = async (payload) => {
   try {
-    const { data } = await axios.get(`${databaseUrl}/messages/get_conversation`, payload);
+    const { data } = await axios.put(`${databaseUrl}/messages/get_conversation`, payload);
     if (data.length > 0) {
       return data;
     }
@@ -52,4 +53,17 @@ const getProvidersAndAdmins = async () => {
   }
 };
 
-export { getUserMessages, createMessage, getConversation, getProvidersAndAdmins };
+const getPatients = async () => {
+  try {
+    const { data } = await axios.get(`${databaseUrl}/patients`);
+    if (data.length > 0) {
+      return data;
+    }
+    return [];
+  } catch (e) {
+    console.warn(e);
+    return e;
+  }
+};
+
+export { getUserMessages, createMessage, getConversation, getProvidersAndAdmins, getPatients };

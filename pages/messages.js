@@ -2,22 +2,35 @@ import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import MessageInfo from '../components/cards/messageInfoCard';
 import Conversation from '../components/conversation';
-import { getProvidersAndAdmins, getUserMessages } from '../utils/messageData';
+import { getConversation, getPatients, getProvidersAndAdmins, getUserMessages } from '../utils/messageData';
 import MessageBox from '../components/cards/messageBox';
+import { useAuth } from '../utils/context/authContext';
 
 export default function ViewMessages() {
+  const { user } = useAuth();
   const [messages, setMessages] = useState([]);
   const [providersAndAdmins, setProvidersAndAdmins] = useState([]);
-  const [activeConversation, setActiveConversation] = useState({});
+  const [patients, setPatients] = useState([]);
+  const [activeConversation, setActiveConversation] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
+  const [selectedRecipient, setSelectedRecipient] = useState(0);
 
   useEffect(() => {
     getUserMessages({ userId: user.id }).then(setMessages);
   }, [user.id]);
 
   useEffect(() => {
+    if (user.admin || user.provider) {
+      getPatients().then(setPatients);
+    }
     getProvidersAndAdmins().then(setProvidersAndAdmins);
-  }, []);
+  }, [user.admin, user.provider]);
+
+  useEffect(() => {
+    if (activeConversation && activeConversation.length > 0) {
+      setSelectedRecipient(activeConversation[0].recipient.id);
+    }
+  }, [activeConversation]);
 
   const handleDialog = () => {
     if (openDialog) {
@@ -26,17 +39,31 @@ export default function ViewMessages() {
     setOpenDialog(true);
   };
 
+  const handleSelectedRecipient = (e) => {
+    const [firstName, lastName, credential] = e.target.value.split(' ');
+    const recipient = providersAndAdmins.find((providerOrAdmin) => providerOrAdmin.first_name === firstName && providerOrAdmin.last_name === lastName && providerOrAdmin.credential === credential);
+    setSelectedRecipient(recipient.id);
+  };
+
+  const handleCompose = () => {
+    if (Number(selectedRecipient) !== 0) {
+      getConversation({ userId: user.id, recipientId: selectedRecipient }).then(setActiveConversation);
+      setOpenDialog(false);
+    }
+  };
+
   return (
     <div className="messages-page">
       <div className="select-recipient-dialog">
         <dialog open={openDialog} className="select-recipient-dialog">
-          <datalist>
-            {providersAndAdmins.map((recipient) => (
-              <option value={recipient.id}>
-                {recipient.firstName} {recipient.lastName}
-              </option>
-            ))}
-          </datalist>
+          <label>
+            Choose a recipient:
+            <input list="recipients" onChange={handleSelectedRecipient} />
+          </label>
+          <datalist id="recipients">{user.provider || user.admin ? <>{patients && patients.length > 0 && patients.map((patient) => <option id={patient.id} value={`${patient.first_name} ${patient.last_name}`} />)}</> : <>{providersAndAdmins && providersAndAdmins.length > 0 && providersAndAdmins.map((recipient) => <option id={recipient.id} value={`${recipient.first_name} ${recipient.last_name} ${recipient.credential}`} />)}</>}</datalist>
+          <Button variant="primary" size="sm" onClick={handleCompose}>
+            Compose Message
+          </Button>
         </dialog>
       </div>
       <div className="message-previews-container">
@@ -45,14 +72,10 @@ export default function ViewMessages() {
             New
           </Button>
         </div>
-        <div className="message-previews">
-          {messages.map((message) => (
-            <MessageInfo key={message.id} message={message} setActiveConversation={setActiveConversation} />
-          ))}
-        </div>
+        <div className="message-previews">{messages && messages.map((message) => <MessageInfo key={message.id} message={message} setActiveConversation={setActiveConversation} />)}</div>
       </div>
       <Conversation activeConversation={activeConversation} />
-      <MessageBox recipientId={activeConversation[0].recipient} setMessages={setMessages} setActiveConversation={setActiveConversation} />
+      <MessageBox recipientId={selectedRecipient} setMessages={setMessages} setActiveConversation={setActiveConversation} />
     </div>
   );
 }
