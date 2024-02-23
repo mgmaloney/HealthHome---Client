@@ -27,8 +27,8 @@ export default function ViewMessages() {
   }, [user.admin, user.provider]);
 
   useEffect(() => {
-    if (activeConversation && activeConversation.length > 0) {
-      setSelectedRecipient(activeConversation[0].recipient.id);
+    if (activeConversation && activeConversation.conversation_messages.length > 0) {
+      setSelectedRecipient(activeConversation.conversation_messages[0].recipient.id);
     }
   }, [activeConversation]);
 
