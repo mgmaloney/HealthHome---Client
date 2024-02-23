@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getConversation, readMessage } from '../../utils/messageData';
+import { getSingleConversation, readMessage } from '../../utils/messageData';
 import { useAuth } from '../../utils/context/authContext';
 
 export default function MessageInfo({ message, setActiveConversation }) {
@@ -18,13 +18,13 @@ export default function MessageInfo({ message, setActiveConversation }) {
     if (message.recipient.id === user.id) {
       recipientId = message.sender.id;
     }
-    const conversation = await getConversation({ userId: user.id, recipientId });
-    conversation.forEach(async (messageToCheck) => {
-      if (messageToCheck.sender.id !== user.id && !messageToCheck.read) {
-        await readMessage({ messageId: messageToCheck.id });
-      }
-    });
-    setActiveConversation(conversation);
+    const conversation = await getSingleConversation({ userId: user.id, recipientId });
+    // conversation.conversation_messages.forEach(async (messageToCheck) => {
+    //   if (messageToCheck.sender.id !== user.id && !messageToCheck.read) {
+    //     await readMessage({ messageId: messageToCheck.id });
+    //   }
+    // });
+    await setActiveConversation(conversation);
   };
 
   const handleCredentialDisplay = () => {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import MessageInfo from '../components/cards/messageInfoCard';
 import Conversation from '../components/conversation';
-import { getConversation, getPatients, getProvidersAndAdmins, getUserMessages } from '../utils/messageData';
+import { getPatients, getProvidersAndAdmins, getSingleConversation, getUserMessages } from '../utils/messageData';
 import MessageBox from '../components/cards/messageBox';
 import { useAuth } from '../utils/context/authContext';
 
@@ -41,13 +41,18 @@ export default function ViewMessages() {
 
   const handleSelectedRecipient = (e) => {
     const [firstName, lastName, credential] = e.target.value.split(' ');
-    const recipient = providersAndAdmins.find((providerOrAdmin) => providerOrAdmin.first_name === firstName && providerOrAdmin.last_name === lastName && providerOrAdmin.credential === credential);
-    setSelectedRecipient(recipient.id);
+    if (user.admin || user.provider) {
+      const recipient = patients.find((patient) => patient.first_name === firstName && patient.last_name === lastName);
+      setSelectedRecipient(recipient.id);
+    } else {
+      const recipient = providersAndAdmins.find((providerOrAdmin) => providerOrAdmin.first_name === firstName && providerOrAdmin.last_name === lastName && providerOrAdmin.credential === credential);
+      setSelectedRecipient(recipient.id);
+    }
   };
 
   const handleCompose = () => {
     if (Number(selectedRecipient) !== 0) {
-      getConversation({ userId: user.id, recipientId: selectedRecipient }).then(setActiveConversation);
+      getSingleConversation({ userId: user.id, recipientId: selectedRecipient }).then(setActiveConversation);
       setOpenDialog(false);
     }
   };

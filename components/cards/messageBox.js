@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createMessage, getConversation, getUserMessages } from '../../utils/messageData';
+import { createMessage, getSingleConversation, getUserMessages } from '../../utils/messageData';
 import { useAuth } from '../../utils/context/authContext';
 
 export default function MessageBox({ recipientId, setMessages, setActiveConversation }) {
@@ -16,7 +16,7 @@ export default function MessageBox({ recipientId, setMessages, setActiveConversa
       await createMessage({ content: message, senderId: user.id, recipientId });
       const updatedMessages = await getUserMessages({ userId: user.id });
       setMessages(updatedMessages);
-      const updatedConversation = await getConversation({ userId: user.id, recipientId });
+      const updatedConversation = await getSingleConversation({ userId: user.id, recipientId });
       setActiveConversation(updatedConversation);
       setMessage('');
     }
