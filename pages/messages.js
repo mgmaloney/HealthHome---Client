@@ -27,10 +27,14 @@ export default function ViewMessages() {
   }, [user.admin, user.provider]);
 
   useEffect(() => {
-    if (activeConversation && activeConversation.conversation_messages.length > 0) {
-      setSelectedRecipient(activeConversation.conversation_messages[0].recipient.id);
+    if (activeConversation && activeConversation.conversation_messages && activeConversation.conversation_messages.length > 0) {
+      if (activeConversation.conversation_messages[0].sender.id === user.id) {
+        setSelectedRecipient(activeConversation.conversation_messages[0].recipient.id);
+      } else {
+        setSelectedRecipient(activeConversation.conversation_messages[0].sender.id);
+      }
     }
-  }, [activeConversation]);
+  }, [activeConversation, activeConversation.conversation_messages]);
 
   const handleDialog = () => {
     if (openDialog) {
@@ -80,7 +84,7 @@ export default function ViewMessages() {
         <div className="message-previews">{messages && messages.map((message) => <MessageInfo key={message.id} message={message} setActiveConversation={setActiveConversation} />)}</div>
       </div>
       <Conversation activeConversation={activeConversation} />
-      <MessageBox recipientId={selectedRecipient} setMessages={setMessages} setActiveConversation={setActiveConversation} />
+      <MessageBox recipientId={selectedRecipient} setMessages={setMessages} activeConversation={activeConversation} setActiveConversation={setActiveConversation} />
     </div>
   );
 }
