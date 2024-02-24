@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getSingleConversation, readMessage } from '../../utils/messageData';
 import { useAuth } from '../../utils/context/authContext';
 
-export default function MessageInfo({ message, setActiveConversation, handleCredentialDisplay }) {
+export default function MessageInfo({ message, setActiveConversation }) {
   const [preview, setPreview] = useState('');
   const { user } = useAuth();
 
@@ -19,11 +19,11 @@ export default function MessageInfo({ message, setActiveConversation, handleCred
       recipientId = message.sender.id;
     }
     const conversation = await getSingleConversation({ userId: user.id, recipientId });
-    // conversation.conversation_messages.forEach(async (messageToCheck) => {
-    //   if (messageToCheck.sender.id !== user.id && !messageToCheck.read) {
-    //     await readMessage({ messageId: messageToCheck.id });
-    //   }
-    // });
+    conversation.conversation_messages.forEach(async (messageToCheck) => {
+      if (messageToCheck.sender.id !== user.id && !messageToCheck.read) {
+        await readMessage({ messageId: messageToCheck.id });
+      }
+    });
     await setActiveConversation(conversation);
   };
 

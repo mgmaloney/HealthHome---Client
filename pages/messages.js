@@ -61,16 +61,6 @@ export default function ViewMessages() {
     }
   };
 
-  const handleCredentialDisplay = (message) => {
-    if (message.recipient.credential && message.recipient.id !== user.id) {
-      return `, ${message.recipient.credential}`;
-    }
-    if (message.sender.credential && message.sender.id === user.id) {
-      return `, ${message.sender.credential}`;
-    }
-    return '';
-  };
-
   return (
     <div className="messages-page">
       <div className="select-recipient-dialog">
@@ -91,9 +81,9 @@ export default function ViewMessages() {
             New
           </Button>
         </div>
-        <div className="message-previews">{recentMessages && recentMessages.map((message) => <MessageInfo key={message.id} message={message} setActiveConversation={setActiveConversation} handleCredentialDisplay={handleCredentialDisplay} />)}</div>
+        <div className="message-previews">{recentMessages && recentMessages.map((message) => <MessageInfo key={message.id} message={message} setActiveConversation={setActiveConversation} />)}</div>
       </div>
-      <Conversation activeConversation={activeConversation} handleCredentialDisplay={handleCredentialDisplay} />
+      <Conversation activeConversation={activeConversation} />
       <MessageBox recipientId={selectedRecipient} setRecentMessages={setRecentMessages} activeConversation={activeConversation} setActiveConversation={setActiveConversation} />
     </div>
   );
