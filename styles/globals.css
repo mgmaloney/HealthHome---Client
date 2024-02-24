@@ -112,3 +112,18 @@ body {
 .message-info {
   border: solid 3px gray;
 }
+
+.patient-card {
+  border-top: solid 2px #e1daecaf;
+  border-bottom: solid 2px #e1daecaf;
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0.5rem;
+  width: 100%;
+}
+
+.patient-name {
+  font-weight: bold;
+  color: #267ccb;
+  text-decoration: underline;
+}

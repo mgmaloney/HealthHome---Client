@@ -46,7 +46,6 @@ function RegisterForm({ updateUser }) {
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>First Name:</Form.Label>
           <Form.Control as="textarea" name="firstName" required placeholder="First Name" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
-          <Form.Text className="text-muted">Last Name:</Form.Text>
           <Form.Label>Last Name:</Form.Label>
           <Form.Control as="textarea" name="lastName" required placeholder="Last Name" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
           <div className="dob-container">

@@ -3,9 +3,42 @@ import { clientCredentials } from './client';
 
 const { databaseURL } = clientCredentials;
 
+const getPatients = async () => {
+  try {
+    const { data } = await axios.get(`${databaseURL}/patients`);
+    if (data.length > 0) {
+      return data;
+    }
+    return [];
+  } catch (e) {
+    console.warn(e);
+    return e;
+  }
+};
+
 const getSinglePatient = async (patientId) => {
   try {
-    const { data } = await axios.get(`${databaseURL}/patients`, { patientId });
+    const { data } = await axios.put(`${databaseURL}/patients/get_single_patient`, { patientId });
+    return data;
+  } catch (e) {
+    console.warn(e);
+    return e;
+  }
+};
+
+const createPatient = async (payload) => {
+  try {
+    const { data } = await axios.post(`${databaseURL}/patients`, payload);
+    return data;
+  } catch (e) {
+    console.warn(e);
+    return e;
+  }
+};
+
+const updatePatient = async (payload) => {
+  try {
+    const { data } = await axios.put(`${databaseURL}/patients`, payload);
     return data;
   } catch (e) {
     console.warn(e);
@@ -56,4 +89,4 @@ const updatePatientAllergy = async (payload) => {
   }
 };
 
-export { getSinglePatient, getPatientAllergies, deletePatientAllergy, createPatientAllergy, updatePatientAllergy };
+export { getPatients, getSinglePatient, createPatient, updatePatient, getPatientAllergies, deletePatientAllergy, createPatientAllergy, updatePatientAllergy };
