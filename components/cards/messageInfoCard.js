@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getSingleConversation, readMessage } from '../../utils/messageData';
 import { useAuth } from '../../utils/context/authContext';
 
-export default function MessageInfo({ message, setActiveConversation }) {
+export default function MessageInfo({ message, setActiveConversation, handleCredentialDisplay }) {
   const [preview, setPreview] = useState('');
   const { user } = useAuth();
 
@@ -28,11 +28,8 @@ export default function MessageInfo({ message, setActiveConversation }) {
   };
 
   const handleCredentialDisplay = () => {
-    if (message.recipient.credential && message.recipient.id !== user.id) {
-      return `, ${message.recipient.credential}`;
-    }
-    if (message.sender.credential && message.sender.id === user.id) {
-      return `, ${message.sender.credential}`;
+    if (user.credential) {
+      return `, ${user.credential}`;
     }
     return '';
   };

@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import MessageInfo from '../components/cards/messageInfoCard';
 import Conversation from '../components/conversation';
-import { getPatients, getProvidersAndAdmins, getSingleConversation, getUserMessages } from '../utils/messageData';
+import { getPatients, getProvidersAndAdmins, getSingleConversation, getUserRecentMessages } from '../utils/messageData';
 import MessageBox from '../components/cards/messageBox';
 import { useAuth } from '../utils/context/authContext';
 
 export default function ViewMessages() {
   const { user } = useAuth();
-  const [messages, setMessages] = useState([]);
+  const [recentMessages, setRecentMessages] = useState([]);
   const [providersAndAdmins, setProvidersAndAdmins] = useState([]);
   const [patients, setPatients] = useState([]);
   const [activeConversation, setActiveConversation] = useState([]);
@@ -16,7 +16,7 @@ export default function ViewMessages() {
   const [selectedRecipient, setSelectedRecipient] = useState(0);
 
   useEffect(() => {
-    getUserMessages({ userId: user.id }).then(setMessages);
+    getUserRecentMessages({ userId: user.id }).then(setRecentMessages);
   }, [user.id]);
 
   useEffect(() => {
@@ -61,6 +61,16 @@ export default function ViewMessages() {
     }
   };
 
+  const handleCredentialDisplay = (message) => {
+    if (message.recipient.credential && message.recipient.id !== user.id) {
+      return `, ${message.recipient.credential}`;
+    }
+    if (message.sender.credential && message.sender.id === user.id) {
+      return `, ${message.sender.credential}`;
+    }
+    return '';
+  };
+
   return (
     <div className="messages-page">
       <div className="select-recipient-dialog">
@@ -81,10 +91,10 @@ export default function ViewMessages() {
             New
           </Button>
         </div>
-        <div className="message-previews">{messages && messages.map((message) => <MessageInfo key={message.id} message={message} setActiveConversation={setActiveConversation} />)}</div>
+        <div className="message-previews">{recentMessages && recentMessages.map((message) => <MessageInfo key={message.id} message={message} setActiveConversation={setActiveConversation} handleCredentialDisplay={handleCredentialDisplay} />)}</div>
       </div>
-      <Conversation activeConversation={activeConversation} />
-      <MessageBox recipientId={selectedRecipient} setMessages={setMessages} activeConversation={activeConversation} setActiveConversation={setActiveConversation} />
+      <Conversation activeConversation={activeConversation} handleCredentialDisplay={handleCredentialDisplay} />
+      <MessageBox recipientId={selectedRecipient} setRecentMessages={setRecentMessages} activeConversation={activeConversation} setActiveConversation={setActiveConversation} />
     </div>
   );
 }

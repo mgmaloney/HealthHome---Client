@@ -104,3 +104,11 @@ body {
   background-image: linear-gradient(45deg, magenta, rebeccapurple, dodgerblue, green);
   opacity: 0.75;
 }
+
+.conversation {
+  border: solid 3px gray;
+}
+
+.message-info {
+  border: solid 3px gray;
+}

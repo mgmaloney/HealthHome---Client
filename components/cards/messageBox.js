@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { createMessage, getSingleConversation, getUserMessages } from '../../utils/messageData';
+import { createMessage, getSingleConversation, getUserMessages, getUserRecentMessages } from '../../utils/messageData';
 import { useAuth } from '../../utils/context/authContext';
 
-export default function MessageBox({ recipientId, setMessages, activeConversation, setActiveConversation }) {
+export default function MessageBox({ recipientId, setRecentMessages, activeConversation, setActiveConversation }) {
   const { user } = useAuth();
   const [message, setMessage] = useState('');
 
@@ -18,8 +18,8 @@ export default function MessageBox({ recipientId, setMessages, activeConversatio
       } else {
         await createMessage({ content: message, senderId: user.id, recipientId });
       }
-      const updatedMessages = await getUserMessages({ userId: user.id });
-      setMessages(updatedMessages);
+      const updatedMessages = await getUserRecentMessages({ userId: user.id });
+      setRecentMessages(updatedMessages);
       const updatedConversation = await getSingleConversation({ userId: user.id, recipientId });
       setActiveConversation(updatedConversation);
       setMessage('');

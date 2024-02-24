@@ -16,6 +16,19 @@ const getUserMessages = async (payload) => {
     return e;
   }
 };
+const getUserRecentMessages = async (payload) => {
+  try {
+    const { data } = await axios.put(`${databaseUrl}/conversations/get_conversations`, payload);
+    console.log('🚀 ~ getUserMessages ~ data:', data);
+    if (data.length > 0) {
+      return data;
+    }
+    return [];
+  } catch (e) {
+    console.warn(e);
+    return e;
+  }
+};
 
 const getSingleConversation = async (payload) => {
   try {
@@ -73,4 +86,4 @@ const getPatients = async () => {
   }
 };
 
-export { getUserMessages, createMessage, readMessage, getSingleConversation, getProvidersAndAdmins, getPatients };
+export { getUserMessages, getUserRecentMessages, createMessage, readMessage, getSingleConversation, getProvidersAndAdmins, getPatients };
