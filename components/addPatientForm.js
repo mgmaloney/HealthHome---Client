@@ -20,9 +20,9 @@ function PatientForm({ patient }) {
 
   useEffect(() => {
     if (patient && patient.id) {
-      setFormData(patient);
+      setFormData({ ...patient, userId: patient.id, firstName: patient.first_name, lastName: patient.last_name, phoneNumber: patient.phone_number, ssn: '' });
     }
-  }, [patient]);
+  }, [patient, patient.id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,19 +60,19 @@ function PatientForm({ patient }) {
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>First Name:</Form.Label>
-          <Form.Control as="textarea" name="firstName" required placeholder="First Name" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
+          <Form.Control as="textarea" name="firstName" required placeholder="First Name" value={formData.firstName} onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
           <Form.Label>Last Name:</Form.Label>
-          <Form.Control as="textarea" name="lastName" required placeholder="Last Name" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
+          <Form.Control as="textarea" name="lastName" required placeholder="Last Name" value={formData.lastName} onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
           <Form.Label>Email:</Form.Label>
-          <Form.Control as="textarea" name="email" required placeholder="Email" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
+          <Form.Control as="textarea" name="email" required placeholder="Email" value={formData.email} onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
           <Form.Label>Phone Number:</Form.Label>
-          <Form.Control as="textarea" name="phoneNumber" required placeholder="Phone Number" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
+          <Form.Control as="textarea" name="phoneNumber" required placeholder="Phone Number" value={formData.phoneNumber} onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
           <Form.Label>Address:</Form.Label>
-          <Form.Control as="textarea" name="address" required placeholder="address" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
+          <Form.Control as="textarea" name="address" required placeholder="address" value={formData.address} onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
           <div className="dob-container">
             <label className="form-label dob">
               Date of Birth:
-              <input className="dob-input" type="date" name="birthdate" min="1900-01-01" max={new Date().toLocaleDateString('en-us')} onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
+              <input className="dob-input" type="date" name="birthdate" min="1900-01-01" value={formData.birthdate} max={new Date().toLocaleDateString('en-us')} onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
             </label>
             <Form.Label>SSN:</Form.Label>
           </div>
@@ -80,17 +80,17 @@ function PatientForm({ patient }) {
           <Form.Text className="text-muted" />
           <Form.Label>Sex:</Form.Label>
           <Form.Select name="sex" value={formData.sex} required onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))}>
-            <option disabled selected={!formData?.sex}>
+            {/* <option disabled selected={!formData.sex}>
               Select an option
-            </option>
+            </option> */}
             <option value="female">Female</option>
             <option value="male">Male</option>
           </Form.Select>
           <Form.Label>Gender:</Form.Label>
           <Form.Select name="gender" value={formData.gender} onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))}>
-            <option disabled selected={!formData?.gender}>
+            {/* <option disabled selected={!formData?.gender}>
               Select an option
-            </option>
+            </option> */}
             <option value="she/her">she/her</option>
             <option value="he/him">he/him</option>
             <option value="they/them">they/them</option>

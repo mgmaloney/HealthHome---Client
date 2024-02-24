@@ -18,7 +18,7 @@ const getPatients = async () => {
 
 const getSinglePatient = async (patientId) => {
   try {
-    const { data } = await axios.get(`${databaseURL}/patients`, { patientId });
+    const { data } = await axios.put(`${databaseURL}/patients/get_single_patient`, { patientId });
     return data;
   } catch (e) {
     console.warn(e);

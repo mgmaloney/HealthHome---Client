@@ -6,7 +6,7 @@ export default function PatientCard({ patient }) {
   const router = useRouter();
   return (
     <>
-      <div>
+      <div className="patient-card">
         <Link passHref href={`/patient/${patient.id}`} className="patient-name">
           <p className="patient-name">
             {patient.first_name} {patient.last_name}
@@ -21,16 +21,16 @@ export default function PatientCard({ patient }) {
         >
           Edit
         </button>
-      </div>
 
-      <div>
-        <p className="c-and-c-item">Phone: {patient.phone_number}</p>
-        <p>
-          Email:{' '}
-          <a href={`mailto:${patient.email}`} className="c-and-c-item email">
-            {patient.email}
-          </a>
-        </p>
+        <div>
+          <p className="c-and-c-item">Phone: {patient.phone_number}</p>
+          <p className="c-and-c-item">
+            Email:{' '}
+            <a href={`mailto:${patient.email}`} className="c-and-c-item email">
+              {patient.email}
+            </a>
+          </p>
+        </div>
       </div>
     </>
   );
