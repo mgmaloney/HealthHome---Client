@@ -80,7 +80,7 @@ body {
 }
 
 .sidebar-main > a:hover {
-  color: grey;
+  color: #1100f5af;
 }
 
 .header-div {
@@ -106,11 +106,58 @@ body {
 }
 
 .conversation {
-  border: solid 3px gray;
+  border: solid 3px #267ccb;
+  min-height: 75vh;
+  min-width: 75vh;
 }
 
 .message-info {
-  border: solid 3px gray;
+  border: solid 3px #267ccb;
+}
+
+.message-box {
+  width: 100%;
+  border: 3px solid #267ccb;
+  display: inline-block;
+}
+
+.textbox-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.textbox-container input:focus,
+.textbox-container input:active {
+  outline: none;
+}
+.textbox-container textarea {
+  width: 90%;
+  border: none;
+  word-break: break-all;
+  resize: none;
+  background-color: transparent;
+  outline: none;
+}
+
+.textbox-container button {
+  float: right;
+}
+
+.message-textbox {
+  min-width: 75vh;
+  min-height: 10vh;
+  background-color: transparent;
+  border: 2px solid #267ccb;
+  /* justify-self: start; */
+}
+
+.send-btn {
+  margin-bottom: 1vh;
+  border: none;
+  background-color: transparent;
+  color: #267ccb;
+  font-weight: 700;
+  justify-self: flex-end;
 }
 
 .patient-card {

@@ -29,10 +29,12 @@ export default function MessageBox({ recipientId, setRecentMessages, activeConve
   return (
     <div className="message-box">
       <form onSubmit={handleSubmit}>
-        <input className="message-textbox" type="textbox" onChange={handleTextChange} value={message} />
-        <button className="send-btn" type="submit">
-          Send &#10148;
-        </button>
+        <div className="textbox-container">
+          <textarea className="message-textbox" cols="40" rows="5" wrap="hard" onChange={handleTextChange} value={message} />
+          <button className="send-btn" type="submit">
+            Send &#10148;
+          </button>
+        </div>
       </form>
     </div>
   );
