@@ -115,6 +115,12 @@ body {
   border: solid 3px #267ccb;
 }
 
+.message-info-selected {
+  border: solid 3px #267ccb;
+  cursor: pointer;
+  box-shadow: 0 0 5px 5px #48abe0;
+}
+
 .message-box {
   width: 100%;
   border: 3px solid #267ccb;
@@ -130,6 +136,7 @@ body {
 .textbox-container input:active {
   outline: none;
 }
+
 .textbox-container textarea {
   width: 90%;
   border: none;

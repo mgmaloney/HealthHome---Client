@@ -47,10 +47,14 @@ export default function ViewMessages() {
     const [firstName, lastName, credential] = e.target.value.split(' ');
     if (user.admin || user.provider) {
       const recipient = patients.find((patient) => patient.first_name === firstName && patient.last_name === lastName);
-      setSelectedRecipient(recipient.id);
+      if (recipient) {
+        setSelectedRecipient(recipient.id);
+      }
     } else {
       const recipient = providersAndAdmins.find((providerOrAdmin) => providerOrAdmin.first_name === firstName && providerOrAdmin.last_name === lastName && providerOrAdmin.credential === credential);
-      setSelectedRecipient(recipient.id);
+      if (recipient) {
+        setSelectedRecipient(recipient.id);
+      }
     }
   };
 
@@ -81,9 +85,9 @@ export default function ViewMessages() {
             New
           </Button>
         </div>
-        <div className="message-previews">{recentMessages && recentMessages.map((message) => <MessageInfo key={message.id} message={message} setActiveConversation={setActiveConversation} />)}</div>
+        <div className="message-previews">{recentMessages && recentMessages.map((message) => <MessageInfo key={message.id} message={message} activeConversation={activeConversation} setActiveConversation={setActiveConversation} />)}</div>
       </div>
-      <Conversation activeConversation={activeConversation} />
+      <Conversation activeConversation={activeConversation} recipientId={selectedRecipient} />
       <MessageBox recipientId={selectedRecipient} setRecentMessages={setRecentMessages} activeConversation={activeConversation} setActiveConversation={setActiveConversation} />
     </div>
   );

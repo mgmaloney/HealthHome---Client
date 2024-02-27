@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import MessageCard from './cards/messageCard';
+import { getUserName } from '../utils/userData';
 
-export default function Conversation({ activeConversation }) {
+export default function Conversation({ activeConversation, recipientId }) {
+  const [conversationPartner, setConversationPartner] = useState({});
+
+  useEffect(() => {
+    getUserName(recipientId).then(setConversationPartner);
+  }, [recipientId]);
+
   return (
     <div className="conversation">
-      {activeConversation && activeConversation.length > 0 && (
+      {activeConversation && activeConversation.conversation_messages?.length > 0 && (
         <>
           <p>
-            <em>{activeConversation[0].sender.id === user.id || activeConversation[1].recipient.id ? `${activeConversation[0].recipient.first_name}` : `${activeConversation[1].recipient.first_name} ${activeConversation[1].recipient.last_name}`}</em>
+            Conversation with:{' '}
+            <strong>
+              <em>{conversationPartner.userName}</em>
+            </strong>
           </p>
-          {activeConversation && activeConversation?.conversation_messages?.length > 0 && activeConversation.conversation_messages.map((message) => <MessageCard message={message} key={message.id} />)}
+          {activeConversation && activeConversation.conversation_messages.length > 0 && activeConversation.conversation_messages.map((message) => <MessageCard message={message} key={message.id} />)}
         </>
       )}
     </div>
