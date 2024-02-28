@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
+/* eslint-disable object-curly-newline */
 import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import MessageInfo from '../components/cards/messageInfoCard';
@@ -34,7 +36,7 @@ export default function ViewMessages() {
         setSelectedRecipient(activeConversation.conversation_messages[0].sender.id);
       }
     }
-  }, [activeConversation, activeConversation.conversation_messages]);
+  }, [activeConversation, activeConversation.conversation_messages, user.id]);
 
   const handleDialog = () => {
     if (openDialog) {
@@ -73,22 +75,27 @@ export default function ViewMessages() {
             Choose a recipient:
             <input list="recipients" onChange={handleSelectedRecipient} />
           </label>
-          <datalist id="recipients">{user.provider || user.admin ? <>{patients && patients.length > 0 && patients.map((patient) => <option id={patient.id} value={`${patient.first_name} ${patient.last_name}`} />)}</> : <>{providersAndAdmins && providersAndAdmins.length > 0 && providersAndAdmins.map((recipient) => <option id={recipient.id} value={`${recipient.first_name} ${recipient.last_name} ${recipient.credential}`} />)}</>}</datalist>
+          <datalist id="recipients">{user.provider || user.admin ? <>{patients && patients.length > 0 && patients.map((patient) => <option key={patient.id} id={patient.id} value={`${patient.first_name} ${patient.last_name}`} />)}</> : <>{providersAndAdmins && providersAndAdmins.length > 0 && providersAndAdmins.map((recipient) => <option id={recipient.id} value={`${recipient.first_name} ${recipient.last_name} ${recipient.credential}`} />)}</>}</datalist>
           <Button variant="primary" size="sm" onClick={handleCompose}>
             Compose Message
           </Button>
         </dialog>
       </div>
-      <div className="message-previews-container">
-        <div className="new-message-btn">
-          <Button variant="primary" size="sm" onClick={handleDialog}>
-            New
-          </Button>
+      <div className="messages-wrapper">
+        <div className="message-previews-container">
+          <div className="new-message-btn">
+            <Button variant="primary" size="sm" onClick={handleDialog}>
+              New
+            </Button>
+          </div>
+          <div className="message-previews">{recentMessages && recentMessages.map((message) => <MessageInfo key={message.id} message={message} activeConversation={activeConversation} setActiveConversation={setActiveConversation} />)}</div>
         </div>
-        <div className="message-previews">{recentMessages && recentMessages.map((message) => <MessageInfo key={message.id} message={message} activeConversation={activeConversation} setActiveConversation={setActiveConversation} />)}</div>
+        <div className="conversations-and-message-box">
+          <Conversation activeConversation={activeConversation} recipientId={selectedRecipient} />
+
+          <MessageBox recipientId={selectedRecipient} setRecentMessages={setRecentMessages} activeConversation={activeConversation} setActiveConversation={setActiveConversation} />
+        </div>
       </div>
-      <Conversation activeConversation={activeConversation} recipientId={selectedRecipient} />
-      <MessageBox recipientId={selectedRecipient} setRecentMessages={setRecentMessages} activeConversation={activeConversation} setActiveConversation={setActiveConversation} />
     </div>
   );
 }

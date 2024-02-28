@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -8,7 +9,7 @@ import { useAuth } from '../utils/context/authContext';
 
 function RegisterForm({ updateUser }) {
   const router = useRouter();
-  const { user, userLoading } = useAuth();
+  const { user } = useAuth();
   const [errorMessage, setErrorMessage] = useState('');
   const [formData, setFormData] = useState({
     uid: user.uid,
@@ -30,9 +31,8 @@ function RegisterForm({ updateUser }) {
   useEffect(() => {
     if (user.uid) {
       if (user.provider || user.admin) {
-        console.warn('wrong routing');
         router.push('/');
-      } else if (!user.provder && !user.provider && user.id) {
+      } else if (!user.admin && !user.provider && user.id) {
         router.push(`/patient/allergies/${user.id}`);
       }
     }

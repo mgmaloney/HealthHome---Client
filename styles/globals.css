@@ -111,14 +111,22 @@ body {
   min-width: 75vh;
 }
 
-.message-info {
-  border: solid 3px #267ccb;
+.messages-wrapper {
+  display: flex;
+}
+
+.message-previews-container {
+  min-height: 150vh;
 }
 
 .message-info-selected {
   border: solid 3px #267ccb;
   cursor: pointer;
   box-shadow: 0 0 5px 5px #48abe0;
+}
+.message-info {
+  border: solid 3px #267ccb;
+  cursor: pointer;
 }
 
 .message-box {
@@ -156,6 +164,10 @@ body {
   background-color: transparent;
   border: 2px solid #267ccb;
   /* justify-self: start; */
+}
+
+.new-message-btn {
+  width: 100%;
 }
 
 .send-btn {

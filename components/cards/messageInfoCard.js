@@ -1,4 +1,7 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { getSingleConversation, readMessage } from '../../utils/messageData';
 import { useAuth } from '../../utils/context/authContext';
 
@@ -43,3 +46,27 @@ export default function MessageInfo({ message, activeConversation, setActiveConv
     </div>
   );
 }
+
+MessageInfo.propTypes = {
+  message: PropTypes.shape({
+    content: PropTypes.string,
+    datetime: PropTypes.string,
+    sender: PropTypes.string,
+    recipient: PropTypes.string,
+    read: PropTypes.bool,
+    conversation: PropTypes.string,
+  }).isRequired,
+  activeConversation: PropTypes.arrayOf(
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        content: PropTypes.string,
+        datetime: PropTypes.string,
+        sender: PropTypes.string,
+        recipient: PropTypes.string,
+        read: PropTypes.bool,
+        conversation: PropTypes.string,
+      })
+    )
+  ).isRequired,
+  setActiveConversation: PropTypes.func.isRequired,
+};

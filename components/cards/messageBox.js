@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { createMessage, getSingleConversation, getUserMessages, getUserRecentMessages } from '../../utils/messageData';
+import PropTypes from 'prop-types';
+import { createMessage, getSingleConversation, getUserRecentMessages } from '../../utils/messageData';
 import { useAuth } from '../../utils/context/authContext';
 
 export default function MessageBox({ recipientId, setRecentMessages, activeConversation, setActiveConversation }) {
@@ -39,3 +40,26 @@ export default function MessageBox({ recipientId, setRecentMessages, activeConve
     </div>
   );
 }
+
+MessageBox.propTypes = {
+  recipientId: PropTypes.string,
+  setRecentMessages: PropTypes.func.isRequired,
+  activeConversation: PropTypes.arrayOf(
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        content: PropTypes.string,
+        datetime: PropTypes.string,
+        sender: PropTypes.string,
+        recipient: PropTypes.string,
+        read: PropTypes.bool,
+        conversation: PropTypes.string,
+      })
+    )
+  ),
+  setActiveConversation: PropTypes.func.isRequired,
+};
+
+MessageBox.defaultProps = {
+  recipientId: '',
+  activeConversation: [],
+};
