@@ -1,4 +1,3 @@
-import { Button } from 'react-bootstrap';
 import Link from 'next/link';
 import { useAuth } from '../utils/context/authContext';
 
@@ -17,8 +16,8 @@ function Home() {
       <h1>
         Welcome {user.firstName} {user.lastName}!{' '}
       </h1>
-      <Link passHref href={'/'}>
-        <p>You have X Unread Messages</p>
+      <Link passHref href="/messages">
+        <p>View Your Messages</p>
       </Link>
     </div>
   );

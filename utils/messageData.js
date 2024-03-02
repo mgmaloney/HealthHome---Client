@@ -6,7 +6,6 @@ const databaseUrl = clientCredentials.databaseURL;
 const getUserMessages = async (payload) => {
   try {
     const { data } = await axios.put(`${databaseUrl}/messages/user_messages`, payload);
-    console.log('🚀 ~ getUserMessages ~ data:', data);
     if (data.length > 0) {
       return data;
     }
@@ -19,7 +18,6 @@ const getUserMessages = async (payload) => {
 const getUserRecentMessages = async (payload) => {
   try {
     const { data } = await axios.put(`${databaseUrl}/conversations/get_conversations`, payload);
-    console.log('🚀 ~ getUserMessages ~ data:', data);
     if (data.length > 0) {
       return data;
     }

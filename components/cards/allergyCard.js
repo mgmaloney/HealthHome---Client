@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Button } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
+import PropTypes from 'prop-types';
 import { deletePatientAllergy, getPatientAllergies } from '../../utils/patientData';
 
 export default function AllergyCard({ patientId, allergy, setAllergies, setFormData }) {
@@ -9,12 +10,24 @@ export default function AllergyCard({ patientId, allergy, setAllergies, setFormD
       deletePatientAllergy(allergy.id).then(async () => {
         const response = await getPatientAllergies(patientId);
         setAllergies(response);
+        setFormData({
+          name: '',
+          severity: '',
+          reaction: '',
+          patientId: Number(patientId),
+        });
       });
     }
   };
 
   const handleEdit = () => {
-    setFormData({ id: allergy.id, name: allergy.name, severity: allergy.severity, reaction: allergy.reaction, patientId: allergy.patient });
+    setFormData({
+      id: allergy.id,
+      name: allergy.name,
+      severity: allergy.severity,
+      reaction: allergy.reaction,
+      patientId: allergy.patient,
+    });
   };
 
   return (
@@ -31,3 +44,16 @@ export default function AllergyCard({ patientId, allergy, setAllergies, setFormD
     </>
   );
 }
+
+AllergyCard.propTypes = {
+  patientId: PropTypes.string.isRequired,
+  allergy: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    severity: PropTypes.string,
+    reaction: PropTypes.string,
+    patient: PropTypes.number,
+  }).isRequired,
+  setAllergies: PropTypes.func.isRequired,
+  setFormData: PropTypes.func.isRequired,
+};

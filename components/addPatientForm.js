@@ -1,28 +1,31 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { createPatient, updatePatient } from '../utils/patientData';
 
+const initialState = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  phoneNumber: '',
+  address: '',
+  birthdate: '',
+  ssn: '',
+  sex: '',
+  gender: '',
+};
+
 function PatientForm({ patient }) {
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    address: '',
-    birthdate: '',
-    ssn: '',
-    sex: '',
-    gender: '',
-  });
+  const [formData, setFormData] = useState(initialState);
 
   useEffect(() => {
     if (patient && patient.id) {
       setFormData({ ...patient, userId: patient.id, firstName: patient.first_name, lastName: patient.last_name, phoneNumber: patient.phone_number, ssn: '' });
     }
-  }, [patient, patient.id]);
+  }, [patient]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -106,6 +109,23 @@ function PatientForm({ patient }) {
   );
 }
 
-PatientForm.propTypes = {};
+PatientForm.propTypes = {
+  patient: PropTypes.shape({
+    id: PropTypes.number,
+    first_name: PropTypes.string,
+    last_name: PropTypes.string,
+    address: PropTypes.string,
+    emaile: PropTypes.string,
+    phone_number: PropTypes.string,
+    birthdate: PropTypes.string,
+    ssn: PropTypes.string,
+    sex: PropTypes.string,
+    gender: PropTypes.string,
+  }),
+};
+
+PatientForm.defaultProps = {
+  patient: initialState,
+};
 
 export default PatientForm;

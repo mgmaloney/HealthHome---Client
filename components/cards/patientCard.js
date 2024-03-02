@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
 
 export default function PatientCard({ patient }) {
   const router = useRouter();
@@ -35,3 +36,18 @@ export default function PatientCard({ patient }) {
     </>
   );
 }
+
+PatientCard.propTypes = {
+  patient: PropTypes.shape({
+    id: PropTypes.number,
+    first_name: PropTypes.string,
+    last_name: PropTypes.string,
+    address: PropTypes.string,
+    email: PropTypes.string,
+    phone_number: PropTypes.string,
+    birthdate: PropTypes.string,
+    ssn: PropTypes.string,
+    sex: PropTypes.string,
+    gender: PropTypes.string,
+  }).isRequired,
+};
