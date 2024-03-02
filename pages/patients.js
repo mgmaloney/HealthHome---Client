@@ -13,5 +13,5 @@ export default function ViewPatients() {
     }
   }, [user]);
 
-  return <>{!user.admin && !user.provider ? <h1>Page Not Found</h1> : <>{patients && patients.length > 0 && patients.map((patient) => <PatientCard patient={patient} />)}</>}</>;
+  return <>{!user.admin && !user.provider ? <h1>Page Not Found</h1> : <>{patients && patients.length > 0 && patients.map((patient) => <PatientCard key={patient.id} patient={patient} />)}</>}</>;
 }

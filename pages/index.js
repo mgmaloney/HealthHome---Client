@@ -16,8 +16,8 @@ function Home() {
       <h1>
         Welcome {user.firstName} {user.lastName}!{' '}
       </h1>
-      <Link passHref href="/">
-        <p>You have X Unread Messages</p>
+      <Link passHref href="/messages">
+        <p>View Your Messages</p>
       </Link>
     </div>
   );

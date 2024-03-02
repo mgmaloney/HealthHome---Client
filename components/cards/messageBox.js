@@ -42,20 +42,31 @@ export default function MessageBox({ recipientId, setRecentMessages, activeConve
 }
 
 MessageBox.propTypes = {
-  recipientId: PropTypes.string,
+  recipientId: PropTypes.number,
   setRecentMessages: PropTypes.func.isRequired,
-  activeConversation: PropTypes.arrayOf(
-    PropTypes.arrayOf(
+  activeConversation: PropTypes.shape({
+    conversation_messages: PropTypes.arrayOf(
       PropTypes.shape({
         content: PropTypes.string,
         datetime: PropTypes.string,
-        sender: PropTypes.string,
+        sender: PropTypes.shape({
+          id: PropTypes.string,
+          first_name: PropTypes.string,
+          last_name: PropTypes.string,
+          address: PropTypes.string,
+          email: PropTypes.string,
+          phone_number: PropTypes.string,
+          birthdate: PropTypes.string,
+          ssn: PropTypes.string,
+          sex: PropTypes.string,
+          gender: PropTypes.string,
+        }),
         recipient: PropTypes.string,
         read: PropTypes.bool,
         conversation: PropTypes.string,
       })
-    )
-  ),
+    ),
+  }),
   setActiveConversation: PropTypes.func.isRequired,
 };
 

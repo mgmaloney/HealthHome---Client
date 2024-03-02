@@ -10,6 +10,12 @@ export default function AllergyCard({ patientId, allergy, setAllergies, setFormD
       deletePatientAllergy(allergy.id).then(async () => {
         const response = await getPatientAllergies(patientId);
         setAllergies(response);
+        setFormData({
+          name: '',
+          severity: '',
+          reaction: '',
+          patientId: Number(patientId),
+        });
       });
     }
   };
@@ -42,11 +48,11 @@ export default function AllergyCard({ patientId, allergy, setAllergies, setFormD
 AllergyCard.propTypes = {
   patientId: PropTypes.string.isRequired,
   allergy: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     name: PropTypes.string,
     severity: PropTypes.string,
     reaction: PropTypes.string,
-    patient: PropTypes.string,
+    patient: PropTypes.number,
   }).isRequired,
   setAllergies: PropTypes.func.isRequired,
   setFormData: PropTypes.func.isRequired,

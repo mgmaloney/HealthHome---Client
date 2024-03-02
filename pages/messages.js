@@ -13,7 +13,7 @@ export default function ViewMessages() {
   const [recentMessages, setRecentMessages] = useState([]);
   const [providersAndAdmins, setProvidersAndAdmins] = useState([]);
   const [patients, setPatients] = useState([]);
-  const [activeConversation, setActiveConversation] = useState([]);
+  const [activeConversation, setActiveConversation] = useState({});
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedRecipient, setSelectedRecipient] = useState(0);
 

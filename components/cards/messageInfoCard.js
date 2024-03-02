@@ -51,22 +51,55 @@ MessageInfo.propTypes = {
   message: PropTypes.shape({
     content: PropTypes.string,
     datetime: PropTypes.string,
-    sender: PropTypes.string,
-    recipient: PropTypes.string,
+    sender: PropTypes.shape({
+      id: PropTypes.number,
+      first_name: PropTypes.string,
+      last_name: PropTypes.string,
+      address: PropTypes.string,
+      email: PropTypes.string,
+      phone_number: PropTypes.string,
+      birthdate: PropTypes.string,
+      ssn: PropTypes.string,
+      sex: PropTypes.string,
+      gender: PropTypes.string,
+    }),
+    recipient: PropTypes.shape({
+      id: PropTypes.number,
+      first_name: PropTypes.string,
+      last_name: PropTypes.string,
+      address: PropTypes.string,
+      email: PropTypes.string,
+      phone_number: PropTypes.string,
+      birthdate: PropTypes.string,
+      ssn: PropTypes.string,
+      sex: PropTypes.string,
+      gender: PropTypes.string,
+    }),
     read: PropTypes.bool,
-    conversation: PropTypes.string,
+    conversation: PropTypes.number,
   }).isRequired,
-  activeConversation: PropTypes.arrayOf(
-    PropTypes.arrayOf(
+  activeConversation: PropTypes.shape({
+    conversation_messages: PropTypes.arrayOf(
       PropTypes.shape({
         content: PropTypes.string,
         datetime: PropTypes.string,
-        sender: PropTypes.string,
+        sender: PropTypes.shape({
+          id: PropTypes.string,
+          first_name: PropTypes.string,
+          last_name: PropTypes.string,
+          address: PropTypes.string,
+          email: PropTypes.string,
+          phone_number: PropTypes.string,
+          birthdate: PropTypes.string,
+          ssn: PropTypes.string,
+          sex: PropTypes.string,
+          gender: PropTypes.string,
+        }),
         recipient: PropTypes.string,
         read: PropTypes.bool,
         conversation: PropTypes.string,
       })
-    )
-  ).isRequired,
+    ),
+  }).isRequired,
   setActiveConversation: PropTypes.func.isRequired,
 };

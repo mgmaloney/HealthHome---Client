@@ -83,7 +83,7 @@ export default function AllergyForm() {
             </FloatingLabel>
             <Button type="submit">{formData.id ? 'Save Allergy' : 'Add Allergy'}</Button>
           </Form>
-          <div className="allergy-form-allergies">{allergies && allergies.map && allergies?.map((allergy) => <AllergyCard patientId={id} allergy={allergy} setAllergies={setAllergies} setFormData={setFormData} />)}</div>
+          <div className="allergy-form-allergies">{allergies && allergies.map && allergies?.map((allergy) => <AllergyCard key={allergy.id} patientId={id} allergy={allergy} setAllergies={setAllergies} setFormData={setFormData} />)}</div>
           <Button variant="primary" onClick={() => router.push('/')}>
             Finish
           </Button>

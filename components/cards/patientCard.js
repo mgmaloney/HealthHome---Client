@@ -39,7 +39,7 @@ export default function PatientCard({ patient }) {
 
 PatientCard.propTypes = {
   patient: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     first_name: PropTypes.string,
     last_name: PropTypes.string,
     address: PropTypes.string,

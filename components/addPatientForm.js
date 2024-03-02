@@ -19,7 +19,7 @@ const initialState = {
 
 function PatientForm({ patient }) {
   const router = useRouter();
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState(initialState);
 
   useEffect(() => {
     if (patient && patient.id) {
@@ -111,7 +111,7 @@ function PatientForm({ patient }) {
 
 PatientForm.propTypes = {
   patient: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     first_name: PropTypes.string,
     last_name: PropTypes.string,
     address: PropTypes.string,
