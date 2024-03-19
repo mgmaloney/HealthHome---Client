@@ -17,7 +17,7 @@ export default function AllergyForm() {
     name: '',
     severity: '',
     reaction: '',
-    patientId: Number(id),
+    patient_id: Number(id),
   };
   const [formData, setFormData] = useState(initialState);
 
@@ -81,12 +81,19 @@ export default function AllergyForm() {
             <FloatingLabel controlId="floatingInput1" label="Describe reaction" className="mb-3">
               <Form.Control type="text" placeholder="Hives on chest..." name="reaction" value={formData.reaction} onChange={handleChange} required />
             </FloatingLabel>
-            <Button type="submit">{formData.id ? 'Save Allergy' : 'Add Allergy'}</Button>
+            <div className="submit-btn-wrapper">
+              <Button type="submit">{formData.id ? 'Save Allergy' : 'Add Allergy'}</Button>
+            </div>
           </Form>
-          <div className="allergy-form-allergies">{allergies && allergies.map && allergies?.map((allergy) => <AllergyCard key={allergy.id} patientId={id} allergy={allergy} setAllergies={setAllergies} setFormData={setFormData} />)}</div>
-          <Button variant="primary" onClick={() => router.push('/')}>
-            Finish
-          </Button>
+          <div className="allergy-form-allergies">
+            <h2>Your Allergies:</h2>
+            <div className="allergies">{allergies && allergies.map && allergies?.map((allergy) => <AllergyCard key={allergy.id} patient_id={id} allergy={allergy} setAllergies={setAllergies} setFormData={setFormData} />)}</div>
+          </div>
+          <div className="submit-btn-wrapper">
+            <Button className="finish-btn" variant="primary" size="lg" onClick={() => router.push('/')}>
+              Finish
+            </Button>
+          </div>
         </>
       ) : (
         <h1>Page not found</h1>

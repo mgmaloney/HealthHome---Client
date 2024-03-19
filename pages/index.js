@@ -1,8 +1,16 @@
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../utils/context/authContext';
+import { getUnreadMessagesCount } from '../utils/messageData';
 
 function Home() {
   const { user } = useAuth();
+  const [unreadMessagesCount, setUnreadMessagesCount] = useState(0);
+
+  useEffect(() => {
+    getUnreadMessagesCount({ userId: user.id }).then(setUnreadMessagesCount);
+  }, [user.id]);
+
   return (
     <div
       className="text-center d-flex flex-column justify-content-center align-content-center"
@@ -14,10 +22,12 @@ function Home() {
       }}
     >
       <h1>
-        Welcome {user.firstName} {user.lastName}!{' '}
+        Welcome {user.first_name} {user.last_name}!{' '}
       </h1>
       <Link passHref href="/messages">
-        <p>View Your Messages</p>
+        <p className="unread-messages">
+          You have {unreadMessagesCount} Unread Message{unreadMessagesCount === 1 ? '' : 's'}
+        </p>
       </Link>
     </div>
   );

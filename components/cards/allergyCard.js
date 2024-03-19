@@ -4,17 +4,17 @@ import Card from 'react-bootstrap/Card';
 import PropTypes from 'prop-types';
 import { deletePatientAllergy, getPatientAllergies } from '../../utils/patientData';
 
-export default function AllergyCard({ patientId, allergy, setAllergies, setFormData }) {
+export default function AllergyCard({ patient_id, allergy, setAllergies, setFormData }) {
   const handleRemove = () => {
     if (window.confirm(`Are you sure you want to delete ${allergy.name} allergy?`)) {
       deletePatientAllergy(allergy.id).then(async () => {
-        const response = await getPatientAllergies(patientId);
+        const response = await getPatientAllergies(patient_id);
         setAllergies(response);
         setFormData({
           name: '',
           severity: '',
           reaction: '',
-          patientId: Number(patientId),
+          patient_id: Number(patient_id),
         });
       });
     }
@@ -26,27 +26,29 @@ export default function AllergyCard({ patientId, allergy, setAllergies, setFormD
       name: allergy.name,
       severity: allergy.severity,
       reaction: allergy.reaction,
-      patientId: allergy.patient,
+      patient_id: allergy.patient,
     });
   };
 
   return (
     <>
-      <Card>
+      <Card className="allergy-card">
         <Card.Body>{allergy.name} Allergy</Card.Body>
-        <Button variant="primary" onClick={handleEdit}>
-          Edit
-        </Button>
-        <Button variant="danger" onClick={handleRemove}>
-          Remove
-        </Button>
+        <div className="card-btns">
+          <Button variant="primary" size="sm" onClick={handleEdit} className="allergy-btn">
+            Edit
+          </Button>
+          <Button variant="danger" size="sm" onClick={handleRemove} className="allergy-btn">
+            Remove
+          </Button>
+        </div>
       </Card>
     </>
   );
 }
 
 AllergyCard.propTypes = {
-  patientId: PropTypes.string.isRequired,
+  patient_id: PropTypes.string.isRequired,
   allergy: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,

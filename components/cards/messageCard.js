@@ -6,15 +6,17 @@ export default function MessageCard({ message }) {
   const { user } = useAuth();
 
   const isSenderUser = () => {
-    if (message.sender === user.id) {
+    if (message.sender.id === user.id) {
       return 'sender';
     }
     return 'recipient';
   };
 
   return (
-    <div className={`message-${isSenderUser()}`}>
-      <p className="message-content">{message.content}</p>
+    <div className={`message-container-${isSenderUser()}`}>
+      <div className={`message-${isSenderUser()}`}>
+        <p className="message-content">{message.content}</p>
+      </div>
     </div>
   );
 }

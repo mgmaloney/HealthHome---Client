@@ -6,10 +6,10 @@ import Form from 'react-bootstrap/Form';
 import { createPatient, updatePatient } from '../utils/patientData';
 
 const initialState = {
-  firstName: '',
-  lastName: '',
+  first_name: '',
+  last_name: '',
   email: '',
-  phoneNumber: '',
+  phone_number: '',
   address: '',
   birthdate: '',
   ssn: '',
@@ -23,19 +23,32 @@ function PatientForm({ patient }) {
 
   useEffect(() => {
     if (patient && patient.id) {
-      setFormData({ ...patient, userId: patient.id, firstName: patient.first_name, lastName: patient.last_name, phoneNumber: patient.phone_number, ssn: '' });
+      setFormData({ ...patient, userId: patient.id, first_name: patient.first_name, last_name: patient.last_name, phone_number: patient.phone_number, ssn: '' });
     }
   }, [patient]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (patient && patient.id) {
-      updatePatient({ formData }).then(router.push('/patients'));
+      updatePatient({ ...formData }).then(router.push('/patients'));
       setFormData({
-        firstName: '',
-        lastName: '',
+        first_name: '',
+        last_name: '',
         email: '',
-        phoneNumber: '',
+        phone_number: '',
+        address: '',
+        birthdate: '',
+        ssn: '',
+        sex: '',
+        gender: '',
+      });
+    } else {
+      createPatient(formData).then(router.push('/patients'));
+      setFormData({
+        first_name: '',
+        last_name: '',
+        email: '',
+        phone_number: '',
         address: '',
         birthdate: '',
         ssn: '',
@@ -43,18 +56,6 @@ function PatientForm({ patient }) {
         gender: '',
       });
     }
-    createPatient(formData).then(router.push('/patients'));
-    setFormData({
-      firstName: '',
-      lastName: '',
-      email: '',
-      phoneNumber: '',
-      address: '',
-      birthdate: '',
-      ssn: '',
-      sex: '',
-      gender: '',
-    });
   };
 
   return (
@@ -63,13 +64,13 @@ function PatientForm({ patient }) {
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>First Name:</Form.Label>
-          <Form.Control as="textarea" name="firstName" required placeholder="First Name" value={formData.firstName} onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
+          <Form.Control as="textarea" name="first_name" required placeholder="First Name" value={formData.first_name} onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
           <Form.Label>Last Name:</Form.Label>
-          <Form.Control as="textarea" name="lastName" required placeholder="Last Name" value={formData.lastName} onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
+          <Form.Control as="textarea" name="last_name" required placeholder="Last Name" value={formData.last_name} onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
           <Form.Label>Email:</Form.Label>
           <Form.Control as="textarea" name="email" required placeholder="Email" value={formData.email} onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
           <Form.Label>Phone Number:</Form.Label>
-          <Form.Control as="textarea" name="phoneNumber" required placeholder="Phone Number" value={formData.phoneNumber} onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
+          <Form.Control as="textarea" name="phone_number" required placeholder="Phone Number" value={formData.phone_number} onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
           <Form.Label>Address:</Form.Label>
           <Form.Control as="textarea" name="address" required placeholder="address" value={formData.address} onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
           <div className="dob-container">

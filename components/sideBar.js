@@ -25,9 +25,9 @@ export default function SideBar() {
             <Link passHref href={`/patient/allergies/${user.id}`}>
               Allergies
             </Link>
-            {/* <Link passHref href={`/patient/medications/${user.id}`}>
+            <Link passHref href={`/patient/medications/${user.id}`}>
               Medications
-            </Link> */}
+            </Link>
           </>
         )}
       </div>

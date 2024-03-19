@@ -8,20 +8,22 @@ export default function PatientCard({ patient }) {
   return (
     <>
       <div className="patient-card">
-        <Link passHref href={`/patient/${patient.id}`} className="patient-name">
-          <p className="patient-name">
-            {patient.first_name} {patient.last_name}
-          </p>
-        </Link>
-        <button
-          type="button"
-          className="patient-nav-link edit-patients-page"
-          onClick={() => {
-            router.push(`/patient/edit/${patient.id}`);
-          }}
-        >
-          Edit
-        </button>
+        <div className="name-and-edit">
+          <Link passHref href={`/patient/${patient.id}`} className="patient-name">
+            <p className="patient-name">
+              {patient.first_name} {patient.last_name}
+            </p>
+          </Link>
+          <button
+            type="button"
+            className="patient-nav-link edit-patients-page"
+            onClick={() => {
+              router.push(`/patient/edit/${patient.id}`);
+            }}
+          >
+            Edit
+          </button>
+        </div>
 
         <div>
           <p className="c-and-c-item">Phone: {patient.phone_number}</p>

@@ -23,6 +23,7 @@ body {
 .main-wrapper {
   display: flex;
   flex-direction: row;
+  /* justify-content: center; */
   width: 100%;
 }
 
@@ -59,6 +60,40 @@ body {
   color: #02060a;
   border: solid 4px transparent;
   border-radius: 3px;
+  margin-right: 5rem;
+}
+
+.sign-in-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15rem;
+}
+
+.sign-in-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: solid 4px blue;
+  width: 50%;
+  padding: 10rem;
+  background-color: #7bcefa;
+}
+
+.sign-in-header {
+  display: flex;
+  justify-content: center;
+}
+
+.sign-in-text {
+  color: blue;
+  text-align: center;
+}
+
+.copy-btn {
+  width: 50%;
 }
 
 .sidebar-main {
@@ -100,9 +135,43 @@ body {
   flex-direction: column;
 }
 
+.dob-input {
+  padding: 0.5rem;
+  font-size: larger;
+  color: grey;
+  border: 1px solid grey;
+  border-radius: 4px;
+}
+
+.select-recipient-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.select-recipient-container * {
+  margin-top: 0.5rem;
+}
+
+.select-recipient-label {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0rem;
+}
+
 .select-recipient-dialog::backdrop {
   background-image: linear-gradient(45deg, magenta, rebeccapurple, dodgerblue, green);
   opacity: 0.75;
+}
+
+.close-dialog-x-container {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0rem;
+}
+
+.close-dialog-x {
+  background-color: transparent;
+  border: solid 1px transparent;
 }
 
 .conversation {
@@ -111,28 +180,124 @@ body {
   min-width: 75vh;
 }
 
+.conversation-header-message {
+  display: flex;
+  flex-direction: column;
+}
+
+.conversation-with {
+  margin-top: 1rem;
+  margin-right: 1rem;
+  font-size: large;
+  align-self: flex-end;
+}
+
+.unread-messages {
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: large;
+  margin-top: 1rem;
+  color: blue;
+}
+
+.conversation-messages {
+  display: flex;
+  flex-direction: column;
+}
+
+.messages-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.message-btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-and-messages {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  justify-content: center;
+}
+
 .messages-wrapper {
   display: flex;
+  width: fit-content;
 }
 
 .message-previews-container {
-  min-height: 150vh;
+  border-left: solid 2px #1100f5af;
+  border-bottom: solid 2px #1100f5af;
 }
 
 .message-info-selected {
   border: solid 3px #267ccb;
   cursor: pointer;
+  width: 23vh;
   box-shadow: 0 0 5px 5px #48abe0;
+  background-color: #48abe0;
 }
 .message-info {
   border: solid 3px #267ccb;
+  border-left: solid 0px #267ccb;
+  border-right: solid 0px #267ccb;
   cursor: pointer;
+  width: 23vh;
+  background-color: #48abe0;
+}
+
+.message-info-contact {
+  padding: 0.25rem 0.45rem;
+  margin: 0rem;
+  color: white;
+}
+
+.message-info-preview {
+  padding: 0rem 0.45rem;
+  margin: 0rem 0rem 0.5rem 0rem;
+  color: white;
 }
 
 .message-box {
   width: 100%;
   border: 3px solid #267ccb;
+  border-top: 0px solid #267ccb;
   display: inline-block;
+}
+
+.message-container-sender,
+.message-container-recipient {
+  margin: 0.5rem 0.75rem;
+  width: 75%;
+}
+
+.message-container-recipient {
+  align-self: flex-end;
+}
+
+.message-sender {
+  background-color: #2d1ff071;
+  border: solid 3px #2d1ff071;
+  border-radius: 4px;
+  justify-self: flex-end;
+}
+
+.message-recipient {
+}
+
+.message-content {
+  color: white;
+  margin: 0.5rem;
+}
+
+.message-recipient {
+  border: solid 3px #1100f5af;
+  border-radius: 4px;
+  background-color: #1100f5af;
+  padding: 0.25rem;
 }
 
 .textbox-container {
@@ -168,6 +333,9 @@ body {
 
 .new-message-btn {
   width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.75rem;
 }
 
 .send-btn {
@@ -179,9 +347,67 @@ body {
   justify-self: flex-end;
 }
 
+.allergy-form-allergies,
+.medication-form-medications {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3rem;
+}
+
+.card {
+  width: fit-content;
+  padding-bottom: 0.25rem;
+}
+
+.allergy-card,
+.medication-card {
+  margin: 0rem 1rem;
+}
+
+.medication-card {
+  padding: 0.25rem 0.5rem;
+}
+
+.card-body {
+  padding: 0.75rem 0.25rem;
+}
+
+.allergy-btn {
+  width: fit-content;
+}
+
+.medication-btn {
+  width: fit-content;
+  margin: 0rem 0.15rem;
+}
+
+.allergies,
+.medications {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 1.5rem;
+}
+
+.card-btns {
+  display: flex;
+  justify-content: space-around;
+  padding-bottom: 0.25rem;
+}
+
+.finish-btn {
+  margin-top: 3rem;
+}
+
+.submit-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
 .patient-card {
-  border-top: solid 2px #e1daecaf;
-  border-bottom: solid 2px #e1daecaf;
+  border-top: solid 2px #48abe0;
+  border-bottom: solid 2px #48abe0;
   display: flex;
   justify-content: space-between;
   margin: 1rem 0.5rem;
@@ -192,4 +418,22 @@ body {
   font-weight: bold;
   color: #267ccb;
   text-decoration: underline;
+}
+
+.edit-patients-page {
+  height: min-content;
+  border: 1px solid #267ccb;
+  background-color: #267ccb;
+  color: white;
+  border-radius: 4px;
+}
+
+.c-and-c-item {
+  text-decoration: underline;
+  color: #267ccb;
+  font-weight: bold;
+}
+
+.form-label {
+  margin-top: 0.75rem;
 }
