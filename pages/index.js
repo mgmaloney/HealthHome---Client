@@ -22,7 +22,7 @@ function Home() {
       }}
     >
       <h1>
-        Welcome {user.first_name} {user.last_name}!{' '}
+        Welcome {user.first_name} {user.last_name}, {user.credential ? user.credential : ''}!
       </h1>
       <Link passHref href="/messages">
         <p className="unread-messages">

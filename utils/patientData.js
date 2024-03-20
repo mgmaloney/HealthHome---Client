@@ -38,7 +38,7 @@ const createPatient = async (payload) => {
 
 const updatePatient = async (payload) => {
   try {
-    const { data } = await axios.put(`${databaseURL}/patients`, payload);
+    const { data } = await axios.put(`${databaseURL}/patients/update_patient`, payload);
     return data;
   } catch (e) {
     console.warn(e);

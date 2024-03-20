@@ -30,7 +30,7 @@ function PatientForm({ patient }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (patient && patient.id) {
-      updatePatient({ ...formData }).then(router.push('/patients'));
+      updatePatient({ ...formData, patient_id: patient.id }).then(router.push('/patients'));
       setFormData({
         first_name: '',
         last_name: '',
