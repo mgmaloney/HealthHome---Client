@@ -441,3 +441,22 @@ body {
 .form-label {
   margin-top: 0.75rem;
 }
+
+.allergy-medications {
+  display: flex;
+  flex-direction: column;
+}
+
+.patient-medications-container,
+.patient-allergies-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.patient-allergy-medication {
+  margin: 1rem;
+}
+
+.patient-details {
+  display: flex;
+}
