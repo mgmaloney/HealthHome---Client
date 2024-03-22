@@ -12,17 +12,15 @@ export default function Conversation({ activeConversation, recipientId }) {
 
   return (
     <div className="conversation">
-      {activeConversation && activeConversation.conversation_messages?.length > 0 && (
-        <>
-          <p>
-            Conversation with:{' '}
-            <strong>
-              <em>{conversationPartner.userName}</em>
-            </strong>
-          </p>
-          {activeConversation && activeConversation.conversation_messages.length > 0 && activeConversation.conversation_messages.map((message) => <MessageCard message={message} key={message.id} />)}
-        </>
-      )}
+      <div className="conversation-header-message">
+        <p className="conversation-with">
+          Conversation with:{' '}
+          <strong>
+            <em>{conversationPartner.userName}</em>
+          </strong>
+        </p>
+      </div>
+      {activeConversation && activeConversation.conversation_messages?.length > 0 && <div className="conversation-messages">{activeConversation && activeConversation.conversation_messages.length > 0 && activeConversation.conversation_messages.map((message) => <MessageCard message={message} key={message.id} />)}</div>}
     </div>
   );
 }

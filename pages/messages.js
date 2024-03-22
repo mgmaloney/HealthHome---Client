@@ -42,18 +42,20 @@ export default function ViewMessages() {
     if (openDialog) {
       setOpenDialog(false);
     }
-    setOpenDialog(true);
+    if (!openDialog) {
+      setOpenDialog(true);
+    }
   };
 
   const handleSelectedRecipient = (e) => {
-    const [firstName, lastName, credential] = e.target.value.split(' ');
+    const [first_name, last_name, credential] = e.target.value.split(' ');
     if (user.admin || user.provider) {
-      const recipient = patients.find((patient) => patient.first_name === firstName && patient.last_name === lastName);
+      const recipient = patients.find((patient) => patient.first_name === first_name && patient.last_name === last_name);
       if (recipient) {
         setSelectedRecipient(recipient.id);
       }
     } else {
-      const recipient = providersAndAdmins.find((providerOrAdmin) => providerOrAdmin.first_name === firstName && providerOrAdmin.last_name === lastName && providerOrAdmin.credential === credential);
+      const recipient = providersAndAdmins.find((providerOrAdmin) => providerOrAdmin.first_name === first_name && providerOrAdmin.last_name === last_name && providerOrAdmin.credential === credential);
       if (recipient) {
         setSelectedRecipient(recipient.id);
       }
@@ -71,29 +73,42 @@ export default function ViewMessages() {
     <div className="messages-page">
       <div className="select-recipient-dialog">
         <dialog open={openDialog} className="select-recipient-dialog">
-          <label>
-            Choose a recipient:
-            <input list="recipients" onChange={handleSelectedRecipient} />
-          </label>
-          <datalist id="recipients">{user.provider || user.admin ? <>{patients && patients.length > 0 && patients.map((patient) => <option key={patient.id} id={patient.id} value={`${patient.first_name} ${patient.last_name}`} />)}</> : <>{providersAndAdmins && providersAndAdmins.length > 0 && providersAndAdmins.map((recipient) => <option id={recipient.id} value={`${recipient.first_name} ${recipient.last_name} ${recipient.credential}`} />)}</>}</datalist>
-          <Button variant="primary" size="sm" onClick={handleCompose}>
-            Compose Message
-          </Button>
+          <div className="close-dialog-x-container">
+            <button type="button" onClick={handleDialog} className="close-dialog-x">
+              X
+            </button>
+          </div>
+          <div className="select-recipient-container">
+            <label className="select-recipient-label">
+              Choose a recipient:
+              <input list="recipients" onChange={handleSelectedRecipient} />
+            </label>
+            <datalist id="recipients">{user.provider || user.admin ? <>{patients && patients.length > 0 && patients.map((patient) => <option key={patient.id} id={patient.id} value={`${patient.first_name} ${patient.last_name}`} />)}</> : <>{providersAndAdmins && providersAndAdmins.length > 0 && providersAndAdmins.map((recipient) => <option id={recipient.id} value={`${recipient.first_name} ${recipient.last_name} ${recipient.credential}`} />)}</>}</datalist>
+            <Button variant="primary" size="sm" onClick={handleCompose}>
+              Compose Message
+            </Button>
+          </div>
         </dialog>
       </div>
-      <div className="messages-wrapper">
-        <div className="message-previews-container">
+      <div className="btn-and-messages">
+        <div className="message-btn-wrapper">
           <div className="new-message-btn">
-            <Button variant="primary" size="sm" onClick={handleDialog}>
+            <Button variant="primary" onClick={handleDialog}>
               New
             </Button>
           </div>
-          <div className="message-previews">{recentMessages && recentMessages.map((message) => <MessageInfo key={message.id} message={message} activeConversation={activeConversation} setActiveConversation={setActiveConversation} />)}</div>
         </div>
-        <div className="conversations-and-message-box">
-          <Conversation activeConversation={activeConversation} recipientId={selectedRecipient} />
+        <div className="everything-but-btn">
+          <div className="messages-wrapper">
+            <div className="message-previews-container">
+              <div className="message-previews">{recentMessages && recentMessages.map((message) => <MessageInfo key={message.id} message={message} activeConversation={activeConversation} setActiveConversation={setActiveConversation} />)}</div>
+            </div>
+            <div className="conversations-and-message-box">
+              <Conversation activeConversation={activeConversation} recipientId={selectedRecipient} />
 
-          <MessageBox recipientId={selectedRecipient} setRecentMessages={setRecentMessages} activeConversation={activeConversation} setActiveConversation={setActiveConversation} />
+              <MessageBox recipientId={selectedRecipient} setRecentMessages={setRecentMessages} activeConversation={activeConversation} setActiveConversation={setActiveConversation} />
+            </div>
+          </div>
         </div>
       </div>
     </div>

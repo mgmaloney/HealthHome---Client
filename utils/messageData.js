@@ -28,6 +28,16 @@ const getUserRecentMessages = async (payload) => {
   }
 };
 
+const getUnreadMessagesCount = async (payload) => {
+  try {
+    const { data } = await axios.put(`${databaseUrl}/messages/unread_messages_count`, payload);
+    return data;
+  } catch (e) {
+    console.warn(e);
+    return e;
+  }
+};
+
 const getSingleConversation = async (payload) => {
   try {
     const { data } = await axios.put(`${databaseUrl}/conversations/get_single_conversation`, payload);
@@ -84,4 +94,4 @@ const getPatients = async () => {
   }
 };
 
-export { getUserMessages, getUserRecentMessages, createMessage, readMessage, getSingleConversation, getProvidersAndAdmins, getPatients };
+export { getUserMessages, getUserRecentMessages, getUnreadMessagesCount, createMessage, readMessage, getSingleConversation, getProvidersAndAdmins, getPatients };

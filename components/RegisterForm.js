@@ -13,8 +13,8 @@ function RegisterForm({ updateUser }) {
   const [errorMessage, setErrorMessage] = useState('');
   const [formData, setFormData] = useState({
     uid: user.uid,
-    firstName: '',
-    lastName: '',
+    first_name: '',
+    last_name: '',
     birthdate: '',
     ssn: '',
   });
@@ -45,9 +45,9 @@ function RegisterForm({ updateUser }) {
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>First Name:</Form.Label>
-          <Form.Control as="textarea" name="firstName" required placeholder="First Name" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
+          <Form.Control as="textarea" name="first_name" required placeholder="First Name" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
           <Form.Label>Last Name:</Form.Label>
-          <Form.Control as="textarea" name="lastName" required placeholder="Last Name" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
+          <Form.Control as="textarea" name="last_name" required placeholder="Last Name" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
           <div className="dob-container">
             <label className="form-label dob">
               Date of Birth:

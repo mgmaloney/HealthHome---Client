@@ -16,9 +16,9 @@ const getPatients = async () => {
   }
 };
 
-const getSinglePatient = async (patientId) => {
+const getSinglePatient = async (patient_id) => {
   try {
-    const { data } = await axios.put(`${databaseURL}/patients/get_single_patient`, { patientId });
+    const { data } = await axios.put(`${databaseURL}/patients/get_single_patient`, { patient_id });
     return data;
   } catch (e) {
     console.warn(e);
@@ -38,7 +38,7 @@ const createPatient = async (payload) => {
 
 const updatePatient = async (payload) => {
   try {
-    const { data } = await axios.put(`${databaseURL}/patients`, payload);
+    const { data } = await axios.put(`${databaseURL}/patients/update_patient`, payload);
     return data;
   } catch (e) {
     console.warn(e);
@@ -46,9 +46,9 @@ const updatePatient = async (payload) => {
   }
 };
 
-const getPatientAllergies = async (patientId) => {
+const getPatientAllergies = async (patient_id) => {
   try {
-    const { data } = await axios.put(`${databaseURL}/allergies/patient_allergies`, { patientId });
+    const { data } = await axios.put(`${databaseURL}/allergies/patient_allergies`, { patient_id });
     if (data.length > 0) {
       return data;
     }
@@ -89,4 +89,60 @@ const updatePatientAllergy = async (payload) => {
   }
 };
 
-export { getPatients, getSinglePatient, createPatient, updatePatient, getPatientAllergies, deletePatientAllergy, createPatientAllergy, updatePatientAllergy };
+const createPatientMedication = async (payload) => {
+  try {
+    const { data } = await axios.post(`${databaseURL}/patientmeds`, payload);
+    return data;
+  } catch (e) {
+    console.warn(e);
+    return e;
+  }
+};
+
+const updatePatientMedication = async (payload) => {
+  try {
+    const { data } = await axios.put(`${databaseURL}/patientmeds/${payload.id}`, payload);
+    return data;
+  } catch (e) {
+    console.warn(e);
+    return e;
+  }
+};
+
+const deletePatientMedication = async (id) => {
+  try {
+    const { data } = await axios.delete(`${databaseURL}/patientmeds/${id}`);
+    return data;
+  } catch (e) {
+    console.warn(e);
+    return e;
+  }
+};
+
+const getPatientMedications = async (payload) => {
+  try {
+    const { data } = await axios.put(`${databaseURL}/patientmeds/get_all_patient_meds`, payload);
+    if (data.length > 0) {
+      return data;
+    }
+    return [];
+  } catch (e) {
+    console.warn(e);
+    return e;
+  }
+};
+
+const getDBMedications = async (searchTerm) => {
+  try {
+    const { data } = await axios.get(`${databaseURL}/dbmeds/filter_meds?search=${searchTerm}`);
+    if (data.length > 0) {
+      return data;
+    }
+    return [];
+  } catch (e) {
+    console.warn(e);
+    return e;
+  }
+};
+
+export { getPatients, getSinglePatient, createPatient, updatePatient, getPatientAllergies, deletePatientAllergy, createPatientAllergy, updatePatientAllergy, getPatientMedications, createPatientMedication, updatePatientMedication, deletePatientMedication, getDBMedications };

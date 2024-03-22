@@ -1,8 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import axios from 'axios';
 import { clientCredentials } from './client';
-import { useRouter } from 'next/router';
 
 const checkUser = (uid) =>
   new Promise((resolve, reject) => {
