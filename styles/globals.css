@@ -275,12 +275,16 @@ body {
 }
 
 .message-container-recipient {
+  align-self: flex-start;
+}
+
+.message-container-sender {
   align-self: flex-end;
 }
 
 .message-sender {
-  background-color: #2d1ff071;
-  border: solid 3px #2d1ff071;
+  background-color: #1100f5af;
+  border: solid 3px #1100f5af;
   border-radius: 4px;
   justify-self: flex-end;
 }
@@ -294,9 +298,9 @@ body {
 }
 
 .message-recipient {
-  border: solid 3px #1100f5af;
+  border: solid 3px #2d1ff071;
   border-radius: 4px;
-  background-color: #1100f5af;
+  background-color: #2d1ff071;
   padding: 0.25rem;
 }
 
