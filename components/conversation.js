@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import MessageCard from './cards/messageCard';
 import { getUserName } from '../utils/userData';
 
-export default function Conversation({ activeConversation, recipientId }) {
+export default function Conversation({ activeConversation, recipient_id }) {
   const [conversationPartner, setConversationPartner] = useState({});
 
   useEffect(() => {
-    getUserName(recipientId).then(setConversationPartner);
-  }, [recipientId]);
+    getUserName(recipient_id).then(setConversationPartner);
+  }, [recipient_id]);
 
   return (
     <div className="conversation">
@@ -26,7 +26,7 @@ export default function Conversation({ activeConversation, recipientId }) {
 }
 
 Conversation.propTypes = {
-  recipientId: PropTypes.number.isRequired,
+  recipient_id: PropTypes.number.isRequired,
   activeConversation: PropTypes.shape({
     conversation_messages: PropTypes.arrayOf(
       PropTypes.shape({

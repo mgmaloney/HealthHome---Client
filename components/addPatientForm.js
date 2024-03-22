@@ -23,7 +23,7 @@ function PatientForm({ patient }) {
 
   useEffect(() => {
     if (patient && patient.id) {
-      setFormData({ ...patient, userId: patient.id, first_name: patient.first_name, last_name: patient.last_name, phone_number: patient.phone_number, ssn: '' });
+      setFormData({ ...patient, user_id: patient.id, first_name: patient.first_name, last_name: patient.last_name, phone_number: patient.phone_number, ssn: '' });
     }
   }, [patient]);
 

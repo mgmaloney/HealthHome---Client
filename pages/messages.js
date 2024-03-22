@@ -18,7 +18,7 @@ export default function ViewMessages() {
   const [selectedRecipient, setSelectedRecipient] = useState(0);
 
   useEffect(() => {
-    getUserRecentMessages({ userId: user.id }).then(setRecentMessages);
+    getUserRecentMessages({ user_id: user.id }).then(setRecentMessages);
   }, [user.id]);
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export default function ViewMessages() {
 
   const handleCompose = () => {
     if (Number(selectedRecipient) !== 0) {
-      getSingleConversation({ userId: user.id, recipientId: selectedRecipient }).then(setActiveConversation);
+      getSingleConversation({ user_id: user.id, recipient_id: selectedRecipient }).then(setActiveConversation);
       setOpenDialog(false);
     }
   };
@@ -104,9 +104,9 @@ export default function ViewMessages() {
               <div className="message-previews">{recentMessages && recentMessages.map((message) => <MessageInfo key={message.id} message={message} activeConversation={activeConversation} setActiveConversation={setActiveConversation} />)}</div>
             </div>
             <div className="conversations-and-message-box">
-              <Conversation activeConversation={activeConversation} recipientId={selectedRecipient} />
+              <Conversation activeConversation={activeConversation} recipient_id={selectedRecipient} />
 
-              <MessageBox recipientId={selectedRecipient} setRecentMessages={setRecentMessages} activeConversation={activeConversation} setActiveConversation={setActiveConversation} />
+              <MessageBox recipient_id={selectedRecipient} setRecentMessages={setRecentMessages} activeConversation={activeConversation} setActiveConversation={setActiveConversation} />
             </div>
           </div>
         </div>

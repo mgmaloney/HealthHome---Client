@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { createMessage, getSingleConversation, getUserRecentMessages } from '../../utils/messageData';
 import { useAuth } from '../../utils/context/authContext';
 
-export default function MessageBox({ recipientId, setRecentMessages, activeConversation, setActiveConversation }) {
+export default function MessageBox({ recipient_id, setRecentMessages, activeConversation, setActiveConversation }) {
   const { user } = useAuth();
   const [message, setMessage] = useState('');
 
@@ -13,15 +13,15 @@ export default function MessageBox({ recipientId, setRecentMessages, activeConve
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (recipientId !== 0) {
+    if (recipient_id !== 0) {
       if (activeConversation.conversation_messages) {
-        await createMessage({ content: message, senderId: user.id, recipientId, conversationId: activeConversation.id });
+        await createMessage({ content: message, sender_id: user.id, recipient_id, conversation_id: activeConversation.id });
       } else {
-        await createMessage({ content: message, senderId: user.id, recipientId });
+        await createMessage({ content: message, sender_id: user.id, recipient_id });
       }
-      const updatedMessages = await getUserRecentMessages({ userId: user.id });
+      const updatedMessages = await getUserRecentMessages({ user_id: user.id });
       setRecentMessages(updatedMessages);
-      const updatedConversation = await getSingleConversation({ userId: user.id, recipientId });
+      const updatedConversation = await getSingleConversation({ user_id: user.id, recipient_id });
       setActiveConversation(updatedConversation);
       setMessage('');
     }
@@ -42,7 +42,7 @@ export default function MessageBox({ recipientId, setRecentMessages, activeConve
 }
 
 MessageBox.propTypes = {
-  recipientId: PropTypes.number,
+  recipient_id: PropTypes.number,
   setRecentMessages: PropTypes.func.isRequired,
   activeConversation: PropTypes.shape({
     conversation_messages: PropTypes.arrayOf(
@@ -71,6 +71,6 @@ MessageBox.propTypes = {
 };
 
 MessageBox.defaultProps = {
-  recipientId: '',
+  recipient_id: '',
   activeConversation: [],
 };
