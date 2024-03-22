@@ -8,7 +8,7 @@ function Home() {
   const [unreadMessagesCount, setUnreadMessagesCount] = useState(0);
 
   useEffect(() => {
-    getUnreadMessagesCount({ userId: user.id }).then(setUnreadMessagesCount);
+    getUnreadMessagesCount({ user_id: user.id }).then(setUnreadMessagesCount);
   }, [user.id]);
 
   return (
@@ -22,7 +22,8 @@ function Home() {
       }}
     >
       <h1>
-        Welcome {user.first_name} {user.last_name}, {user.credential ? user.credential : ''}!
+        Welcome {user.first_name} {user.last_name}
+        {user.credential ? `, ${user.credential}` : ''}!
       </h1>
       <Link passHref href="/messages">
         <p className="unread-messages">

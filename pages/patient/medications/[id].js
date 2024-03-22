@@ -64,7 +64,7 @@ export default function MedicationForm() {
               <Form.Control type="text" placeholder="50 mg" name="dose" value={formData.dose} onChange={handleChange} required />
             </FloatingLabel>
             <FloatingLabel controlId="floatingInput1" label="Route of Administration" className="mb-3">
-              <Form.Select name="route" value={formData.route}>
+              <Form.Select name="route" value={formData.route} onChange={handleChange}>
                 <option value="oral">Oral</option>
                 <option value="sublingual">Sublingual</option>
                 <option value="rectal">Rectal</option>

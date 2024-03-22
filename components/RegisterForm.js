@@ -24,8 +24,9 @@ function RegisterForm({ updateUser }) {
     const response = await firstLoginAccountCheck(formData);
     if ('valid' in response) {
       setErrorMessage('Account not found. Please try again or contact the clinic');
+    } else {
+      await updateUser(response.uid);
     }
-    await updateUser(user.uid);
   };
 
   useEffect(() => {

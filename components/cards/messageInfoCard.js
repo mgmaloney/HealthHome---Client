@@ -8,7 +8,7 @@ import { useAuth } from '../../utils/context/authContext';
 export default function MessageInfo({ message, activeConversation, setActiveConversation }) {
   const [preview, setPreview] = useState('');
   const { user } = useAuth();
-  const [recipientId, setRecipientId] = useState('');
+  const [recipient_id, setrecipient_id] = useState('');
 
   useEffect(() => {
     if (message.content) {
@@ -18,13 +18,13 @@ export default function MessageInfo({ message, activeConversation, setActiveConv
   }, [message.content]);
 
   const handleConversationSelect = async () => {
-    let selectedRecipientId = message.recipient.id;
+    let selectedrecipient_id = message.recipient.id;
     if (message.recipient.id === user.id) {
-      selectedRecipientId = message.sender.id;
+      selectedrecipient_id = message.sender.id;
     }
-    setRecipientId(selectedRecipientId);
-    const conversation = await getSingleConversation({ userId: user.id, recipientId: selectedRecipientId });
-    conversation.conversation_messages.forEach(async (messageToCheck) => {
+    setrecipient_id(selectedrecipient_id);
+    const conversation = await getSingleConversation({ user_id: user.id, recipient_id: selectedrecipient_id });
+    conversation.conversation_messages?.forEach(async (messageToCheck) => {
       if (messageToCheck.sender.id !== user.id && !messageToCheck.read) {
         await readMessage({ messageId: messageToCheck.id });
       }
@@ -40,8 +40,8 @@ export default function MessageInfo({ message, activeConversation, setActiveConv
   };
 
   return (
-    <div className={(activeConversation.conversation_messages && activeConversation.conversation_messages[0].recipient.id === recipientId) || (activeConversation.conversation_messages && activeConversation.conversation_messages[0].sender.id === recipientId) ? 'message-info-selected' : 'message-info'} onClick={handleConversationSelect}>
-      <p className="message-info-contact">{user.id === message.sender.id ? `${message.recipient.first_name} ${message.recipient.last_name}${handleCredentialDisplay()}` : `${message.sender.first_name} ${message.sender.last_name}${handleCredentialDisplay()}`}</p>
+    <div className={(activeConversation.conversation_messages && activeConversation.conversation_messages[0].recipient.id === recipient_id) || (activeConversation.conversation_messages && activeConversation.conversation_messages[0].sender.id === recipient_id) ? 'message-info-selected' : 'message-info'} onClick={handleConversationSelect}>
+      <p className="message-info-contact">{user.id === message.sender?.id ? `${message.recipient?.first_name} ${message.recipient?.last_name}${handleCredentialDisplay()}` : `${message.sender?.first_name} ${message.sender?.last_name}${handleCredentialDisplay()}`}</p>
       <p className="message-info-preview">{preview}</p>
     </div>
   );
